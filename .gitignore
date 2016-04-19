@@ -1,2 +1,4 @@
 .idea
 packer/packer_cache
+
+/vendor/

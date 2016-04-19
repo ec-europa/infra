@@ -1,0 +1,13 @@
+{
+    "name": "ec-europa/joinup-infra",
+    "type": "library",
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "Gregory Boddin",
+            "email": "gregory@siwhine.net"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
