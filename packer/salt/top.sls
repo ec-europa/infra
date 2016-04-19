@@ -5,3 +5,4 @@ base:
    - mysql
    - virtuoso
    - mailcatcher
+   - aws

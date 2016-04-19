@@ -1,8 +1,11 @@
-rubygems-integration:
-  pkg.installed
+mailcatcher-stack:
+  pkg.installed:
+    - pkgs:
+      - rubygems-integration
+      - ruby-dev
 
 mailcatcher:
   gem.installed:
     - name: mailcatcher
   require:
-    - pkg: rubygems-integration
+    - pkg: mailcatcher-stack
