@@ -44,4 +44,7 @@
         </aws-deploy-deployment-group>
     </target>
 
+    <target name="provision-stack"
+            description="Provision a stack on AWS"
+            depends="setup-aws, run-stack, setup-deployment-group" />
 </project>
