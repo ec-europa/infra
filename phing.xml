@@ -26,7 +26,7 @@
                 name="${deploy.applicationName}-${cf.stackName}"
                 updateOnConflict="true"
                 capabilities="CAPABILITY_IAM"
-                templatePath="./resources/cloudformation/single-server.template">
+                templatePath="./vendor/ec-europa/joinup-infra/cloudformation/single-server.template">
             <param name="KeyName" value="${cf.KeyName}" />
             <param name="ApplicationName" value="${deploy.applicationName}" />
             <param name="env" value="${cf.stackName}" />
