@@ -5,6 +5,7 @@ mailcatcher-stack:
       - ruby2.0-dev
       - build-essential
       - supervisor
+      - sqlite3
 
 mailcatcher:
   cmd.run:
