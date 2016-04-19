@@ -7,8 +7,8 @@ mailcatcher-stack:
       - supervisor
 
 mailcatcher:
-  gem.installed:
-    - name: mailcatcher
+  cmd.run:
+    - name: gem2.0 install mailcatcher --no-ri --no-rdoc
   require:
     - pkg: mailcatcher-stack
 
@@ -20,5 +20,5 @@ mailcatcher-daemon:
      - name: /etc/supervisor/conf.d/mailcatcher.conf
      - source: salt://resources/superivsor-mailcatcher.conf
      - require:
-       - gem: mailcatcher
+       - cmd: mailcatcher
 
