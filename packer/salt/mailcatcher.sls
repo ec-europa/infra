@@ -3,6 +3,7 @@ mailcatcher-stack:
     - pkgs:
       - rubygems-integration
       - ruby2.0-dev
+      - ruby2.0
       - build-essential
       - supervisor
       - libsqlite3-dev

@@ -4,5 +4,6 @@ base:
    - php5
    - mysql
    - virtuoso
+   - solr
    - mailcatcher
    - aws
