@@ -3,6 +3,7 @@ mailcatcher-stack:
     - pkgs:
       - rubygems-integration
       - ruby-dev
+      - make
 
 mailcatcher:
   gem.installed:
