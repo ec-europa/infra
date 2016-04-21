@@ -6,6 +6,12 @@
     <property file="build.properties" />
     <property file="build.properties.dist" />
 
+    <target name="build-ec2-ami">
+        <!-- Running packer for aws -->
+        <exec command="${packer.path} build --var aws_access_key=${aws.id} --var aws_secret_key=${aws.secret} aws.json"
+        passthru="true" dir="vendor/ec-europa/joinup-infra/packer"/>
+    </target>
+
     <target name="setup-aws">
         <property name="aws.profile" value="" />
         <aws-config region="${aws.region}" profile="${aws.profile}" />
