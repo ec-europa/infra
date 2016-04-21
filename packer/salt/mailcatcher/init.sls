@@ -20,7 +20,7 @@ mailcatcher:
 mailcatcher-daemon:
    file.managed:
      - name: /etc/supervisor/conf.d/mailcatcher.conf
-     - source: salt://resources/superivsor-mailcatcher.conf
+     - source: salt://mailcatcher/supervisor.conf
      - require:
        - cmd: mailcatcher
 
