@@ -7,7 +7,7 @@ This will build the default Linux environment in either virtualbox/aws/docker us
 ##Build for AWS
 
 ```
-packer build --var "aws_access_key=$AWS_ACCESS_KEY" --var "aws_secret_key=$AWS_SECRET_KEY" packer.json 
+packer build --var "aws_access_key=$AWS_ACCESS_KEY" --var="aws_region=$AWS_REGION" --var "aws_secret_key=$AWS_SECRET_KEY" packer.json 
 ```
 
 This assumes your AWS credentials are in your environment variables
