@@ -11,7 +11,8 @@
     "source_ami": "ami-6077f713",
     "instance_type": "t2.micro",
     "ssh_username": "ubuntu",
-    "ami_name": "joinup-dev {{timestamp}}"
+    "ami_name": "joinup-dev {{timestamp}}",
+    "iam_instance_profile" : "acceptance"
   }],
   "provisioners":[ {
     "type": "salt-masterless",
