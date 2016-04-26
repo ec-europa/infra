@@ -8,3 +8,10 @@ virtuoso-repository:
 virtuoso-server:
   pkg.installed:
     - refresh: True
+
+virtuoso-default-file-installed:
+  file.managed:
+    - name: /etc/default/virtuoso-opensource-7
+    - source: salt://virtuoso-opensource-7/default
+    - require:
+      - pkg: virtuoso-server
