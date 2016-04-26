@@ -6,6 +6,6 @@ base:
     - virtuoso
     - solr
     - mailcatcher
-  'provider:ec2'
+  'provider:ec2':
     - match: grain
     - aws
