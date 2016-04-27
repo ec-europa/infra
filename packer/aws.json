@@ -2,7 +2,8 @@
   "variables": {
     "aws_access_key": "",
     "aws_secret_key": "",
-    "aws_secret_region": ""
+    "aws_secret_region": "",
+    "site_type": ""
   },
   "builders": [{
     "type": "amazon-ebs",
@@ -17,7 +18,11 @@
   }],
   "provisioners":[ {
     "type": "shell",
-    "inline": ["mkdir /etc/salt; echo 'provider: ec2' >> /etc/salt/grains "]
+    "inline": [
+      "mkdir /etc/salt; /bin/true;",
+      "echo 'provider: ec2' >> /etc/salt/grains",
+      "echo 'site_type: {{user `site_type`}}' >> /etc/salt/grains"
+    ]
   },{
     "type": "salt-masterless",
     "local_state_tree": "salt"

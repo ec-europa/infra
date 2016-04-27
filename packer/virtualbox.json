@@ -2,7 +2,8 @@
     "variables": {
         "ssh_name": "ubuntu",
         "ssh_pass": "ubuntu",
-        "hostname": "joinup-dev"
+        "hostname": "joinup-dev",
+        "site_type": ""
     },
 
     "builders": [{
@@ -52,7 +53,8 @@
         "inline": [
             "apt-get install virtualbox-guest-dkms curl -y",
             "[ ! -d /etc/salt ] && sudo mkdir /etc/salt",
-            "echo 'provider: virtualbox' >> /etc/salt/grains"
+            "echo 'provider: virtualbox' >> /etc/salt/grains",
+            "echo 'site_type: {{user `site_type`}}' >> /etc/salt/grains"
         ]
     },{
         "type": "salt-masterless",

@@ -9,9 +9,15 @@
 
     <target name="build-ec2-ami">
         <!-- Running packer for aws -->
-        <exec command="${packer.path} build --var aws_access_key=${aws.id}
+        <exec command="${packer.path} build --var site_type=${project.siteType} --var aws_access_key=${aws.id}
             --var aws_secret_key=${aws.secret} --var aws_region=${aws.region} aws.json"
           passthru="true" dir="vendor/ec-europa/joinup-infra/packer"/>
+    </target>
+
+    <target name="build-virtualbox-image">
+        <!-- Running packer for virtualbox -->
+        <exec command="${packer.path} build --var site_type=${project.siteType}  virtualbox.json"
+              passthru="true" dir="vendor/ec-europa/joinup-infra/packer"/>
     </target>
 
     <target name="setup-aws">
