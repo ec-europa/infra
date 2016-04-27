@@ -290,8 +290,9 @@
         },
         "ImageId": {
           "Fn::FindInMap": [
-            { "Ref": "SiteType" },
-            "Ami2SiteType"
+            "Ami2SiteType",
+            { "Ref": "AWS::Region" },
+            { "Ref": "SiteType" }
           ]
         },
         "InstanceType": {
