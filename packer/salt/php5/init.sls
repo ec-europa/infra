@@ -1,9 +1,7 @@
-libapache2-mod-php5:
-  pkg.installed
-
 php5-joinup-stack:
   pkg.installed:
     - pkgs:
+      - libapache2-mod-php5
       - php5-gd
       - php5-odbc
       - php5-mysqlnd
@@ -16,5 +14,7 @@ php5-joinup-stack:
       - php5-mcrypt
       - php5-memcached
       - php5-cli
+    - require:
+      - pkg: apache2
 
 

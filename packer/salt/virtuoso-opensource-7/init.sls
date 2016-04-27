@@ -20,14 +20,21 @@ virtuoso-default-file-installed:
     - require:
       - pkg: virtuoso-server
 
+unixodbc:
+  pkg.installed
+
+virtuoso-odbc-ini-installed:
+  file.managed:
+    - source: salt://virtuoso-opensource-7/odbc.ini
+    - name: /etc/odbc.ini
+    - require:
+      - pkg: unixodbc
+
 virtuoso-setup-password:
   cmd.wait:
     - name: echo set password dba {{ grains['virtuoso_password'] }}|isql "VOS" dba dba
     - watch:
       - service: virtuoso-server
-
-unixodbc:
-  pkg.installed
 
 cloudformation-virtuoso-tmp-config:
   file.append:
