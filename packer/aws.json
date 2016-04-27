@@ -2,8 +2,11 @@
   "variables": {
     "aws_access_key": "",
     "aws_secret_key": "",
-    "aws_secret_region": "",
-    "site_type": ""
+    "aws_region": "",
+    "site_type": "",
+    "mysql_password": "",
+    "virtuoso_password": ""
+
   },
   "builders": [{
     "type": "amazon-ebs",
@@ -22,7 +25,9 @@
     "inline": [
       "[ ! -d /etc/salt ] && mkdir /etc/salt",
       "echo 'provider: ec2' >> /etc/salt/grains",
-      "echo 'site_type: {{user `site_type`}}' >> /etc/salt/grains"
+      "echo 'site_type: {{user `site_type`}}' >> /etc/salt/grains",
+      "echo 'mysql_password: {{user `mysql_password`}}' >> /etc/salt/grains",
+      "echo 'virtuoso_password: {{user `virtuoso_password`}}' >> /etc/salt/grains"
     ]
   },{
     "type": "salt-masterless",

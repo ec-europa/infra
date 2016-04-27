@@ -10,7 +10,8 @@
     <target name="build-ec2-ami">
         <!-- Running packer for aws -->
         <exec command="${packer.path} build --var site_type=${project.siteType} --var aws_access_key=${aws.id}
-            --var aws_secret_key=${aws.secret} --var aws_region=${aws.region} aws.json"
+            --var aws_secret_key=${aws.secret} --var aws_region=${aws.region} --var mysql_password=${drupal.db.password}
+            --var virtuoso_password=${sparql.password} aws.json"
           passthru="true" dir="vendor/ec-europa/infra/packer"/>
     </target>
 

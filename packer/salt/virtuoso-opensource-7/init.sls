@@ -15,3 +15,16 @@ virtuoso-default-file-installed:
     - source: salt://virtuoso-opensource-7/default
     - require:
       - pkg: virtuoso-server
+
+/usr/local/etc/subsite/subsite.tmp.ini:
+  file.append:
+    - makedirs: True
+    - text: "sparql.host: localhost"
+    - text: "sparql.port: 8890"
+    - text: "sparql.user: dba"
+    - text: "sparql.dsn: VOS"
+    - text: "sparql.password: {{ grains['virtuoso_password'] }}"
+
+
+
+

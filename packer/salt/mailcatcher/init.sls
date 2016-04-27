@@ -24,3 +24,18 @@ mailcatcher-daemon:
      - require:
        - cmd: mailcatcher
 
+/etc/php5/cli/conf.d/30-mailcatcher.ini:
+  file.managed:
+    - source: salt://mailcatcher/php.ini
+    - require:
+      - pkg: php5-joinup-stack
+      - pkg: apache2
+
+/etc/php5/apache2/conf.d/30-mailcatcher.ini:
+  file.managed:
+    - source: salt://mailcatcher/php.ini
+    - require:
+      - pkg: php5-joinup-stack
+      - pkg: apache2
+
+
