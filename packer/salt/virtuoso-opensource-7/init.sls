@@ -9,6 +9,7 @@ virtuoso-server:
   pkg.installed:
     - refresh: True
   service.running:
+    - name: virtuoso-opensource-7
     - require:
       - file: virtuoso-default-file-installed
 
@@ -19,11 +20,18 @@ virtuoso-default-file-installed:
     - require:
       - pkg: virtuoso-server
 
+virtuoso-setup-password:
+  cmd.wait:
+    - name: echo set password dba {{ grains['virtuoso_password'] }}|isql "VOS" dba dba
+    - watch:
+      - service: virtuoso-server
+
 unixodbc:
   pkg.installed
 
-/usr/local/etc/subsite/subsite.tmp.ini:
+cloudformation-virtuoso-tmp-config:
   file.append:
+    - name: /usr/local/etc/subsite/subsite.tmp.ini
     - makedirs: True
     - text:
       - "sparql.host=localhost"

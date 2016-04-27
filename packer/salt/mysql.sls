@@ -27,8 +27,9 @@ mysql_set_root_pw_grants:
 
 
 
-/usr/local/etc/subsite/subsite.tmp.ini:
+cloudformation-mysql-tmp-config:
   file.append:
+    - name: /usr/local/etc/subsite/subsite.tmp.ini
     - makedirs: True
     - text:
       - "drupal.db.host=localhost"
