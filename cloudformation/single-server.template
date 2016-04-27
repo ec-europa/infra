@@ -59,7 +59,9 @@
   },
   "Mappings": {
     "Ami2SiteType": {
-      "joinup": "ami-894ac4fa"
+      "joinup": {
+        "eu-west-1": "ami-894ac4fa" 
+      }
     }
   },
   "Conditions": {
