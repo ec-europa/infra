@@ -25,7 +25,13 @@ mysql_set_root_pw_grants:
       - mysql_user: mysql_set_root_pw
     - connection_default_file: /etc/mysql/debian.cnf
 
-
+drop_empty_passwords:
+  mysql_query.run:
+    - database: mysql
+    - query:    "DELETE FROM mysql.user where Password = ''; FLUSH PRIVILEGES;"
+    - connection_default_file: /etc/mysql/debian.cnf
+    - require:
+      - mysql_grants: mysql_set_root_pw_grants
 
 cloudformation-mysql-tmp-config:
   file.append:
