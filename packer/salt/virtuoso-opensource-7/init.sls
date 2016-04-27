@@ -8,6 +8,9 @@ virtuoso-repository:
 virtuoso-server:
   pkg.installed:
     - refresh: True
+  service.running:
+    - require:
+      - file: virtuoso-default-file-installed
 
 virtuoso-default-file-installed:
   file.managed:
@@ -16,14 +19,18 @@ virtuoso-default-file-installed:
     - require:
       - pkg: virtuoso-server
 
+unixodbc:
+  pkg.installed
+
 /usr/local/etc/subsite/subsite.tmp.ini:
   file.append:
     - makedirs: True
-    - text: "sparql.host: localhost"
-    - text: "sparql.port: 8890"
-    - text: "sparql.user: dba"
-    - text: "sparql.dsn: VOS"
-    - text: "sparql.password: {{ grains['virtuoso_password'] }}"
+    - text:
+      - "sparql.host=localhost"
+      - "sparql.port=8890"
+      - "sparql.user=dba"
+      - "sparql.dsn=VOS"
+      - "sparql.password={{ grains['virtuoso_password'] }}"
 
 
 

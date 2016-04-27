@@ -30,7 +30,8 @@ mysql_set_root_pw_grants:
 /usr/local/etc/subsite/subsite.tmp.ini:
   file.append:
     - makedirs: True
-    - text: "drupal.db.host: localhost"
-    - text: "drupal.db.name: subsite"
-    - text: "drupal.db.user: root"
-    - text: "drupal.db.password: {{ grains['mysql_password'] }}"
+    - text:
+      - "drupal.db.host=localhost"
+      - "drupal.db.name=subsite"
+      - "drupal.db.user=root"
+      - "drupal.db.password={{ grains['mysql_password'] }}"
