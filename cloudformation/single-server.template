@@ -255,6 +255,7 @@
               [
                 "#!/bin/bash -xe\n",
                 "# Setup application dependencies.\n",
+                "mkdir -p /usr/local/etc/subsite \n",
                 "echo 'aws.region=",
                 {
                   "Ref": "AWS::Region"
