@@ -59,8 +59,8 @@
   },
   "Mappings": {
     "Ami2SiteType": {
-      "joinup": {
-        "eu-west-1": "ami-894ac4fa" 
+      "eu-west-1": {
+        "joinup": "ami-894ac4fa" 
       }
     }
   },
@@ -290,8 +290,8 @@
         },
         "ImageId": {
           "Fn::FindInMap": [
-            "Ami2SiteType",
-            { "Ref": "SiteType" }
+            { "Ref": "SiteType" },
+            "Ami2SiteType"
           ]
         },
         "InstanceType": {
