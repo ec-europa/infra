@@ -1,0 +1,24 @@
+{
+    "variables": {
+        "site_type": ""
+    },
+    "builders": [{
+        "type": "docker",
+        "image": "ubuntu:14.04",
+        "commit": true
+
+    }],
+    "provisioners":[{
+        "type": "shell",
+        "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+        "inline": [
+            "apt-get install curl -y",
+            "[ ! -d /etc/salt ] && sudo mkdir /etc/salt",
+            "echo 'provider: docker' >> /etc/salt/grains",
+            "echo 'site_type: {{user `site_type`}}' >> /etc/salt/grains"
+        ]
+    },{
+        "type": "salt-masterless",
+        "local_state_tree": "salt"
+    }]
+}

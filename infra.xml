@@ -5,7 +5,6 @@
     <property file="build.properties.local" />
     <property file="build.properties" />
     <property file="build.properties.dist" />
-    <property name="project.siteType" value="joinup" />
 
     <target name="build-ec2-ami">
         <!-- Running packer for aws -->

@@ -28,14 +28,14 @@ mailcatcher-daemon:
   file.managed:
     - source: salt://mailcatcher/php.ini
     - require:
-      - pkg: php5-joinup-stack
+      - pkg: php5-stack
       - pkg: apache2
 
 /etc/php5/apache2/conf.d/30-mailcatcher.ini:
   file.managed:
     - source: salt://mailcatcher/php.ini
     - require:
-      - pkg: php5-joinup-stack
+      - pkg: php5-stack
       - pkg: apache2
 
 

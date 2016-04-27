@@ -2,7 +2,7 @@
     "variables": {
         "ssh_name": "ubuntu",
         "ssh_pass": "ubuntu",
-        "hostname": "joinup-dev",
+        "hostname": "site-dev",
         "site_type": ""
     },
 

@@ -1,4 +1,4 @@
-php5-joinup-stack:
+php5-stack:
   pkg.installed:
     - pkgs:
       - libapache2-mod-php5
