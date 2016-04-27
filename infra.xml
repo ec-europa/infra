@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<project name="Joinup" default="help">
+<project name="Infra" default="help">
 
     <property file="build.properties.local" />
     <property file="build.properties" />
     <property file="build.properties.dist" />
+    <property name="project.siteType" value="joinup" />
 
     <target name="build-ec2-ami">
         <!-- Running packer for aws -->
@@ -33,10 +34,11 @@
                 name="${deploy.applicationName}-${cf.stackName}"
                 updateOnConflict="true"
                 capabilities="CAPABILITY_IAM"
-                templatePath="./vendor/ec-europa/joinup-infra/cloudformation/single-server.template">
+                templatePath="./vendor/ec-europa/infra/cloudformation/single-server.template">
             <param name="KeyName" value="${cf.KeyName}" />
             <param name="ApplicationName" value="${deploy.applicationName}" />
             <param name="env" value="${cf.stackName}" />
+            <param name="SiteType" value="${project.siteType}" />
         </aws-cf-runstack>
     </target>
 

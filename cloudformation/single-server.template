@@ -7,6 +7,14 @@
       "Type": "AWS::EC2::KeyPair::KeyName",
       "ConstraintDescription": "must be the name of an existing EC2 KeyPair."
     },
+    "SiteType": {
+      "Description": "Website type",
+      "Type": "String",
+      "AllowedValues": [
+        "joinup",
+        "subsite"
+      ]
+    },
     "InstanceType": {
       "Description": "WebServer EC2 instance type",
       "Type": "String",
@@ -47,6 +55,11 @@
     "ApplicationName": {
       "Type": "String",
       "Description": "The CodeDeploy application name"
+    }
+  },
+  "Mappings": {
+    "Ami2SiteType": {
+      "joinup": "ami-90eb64e3"
     }
   },
   "Conditions": {
@@ -272,7 +285,12 @@
             ]
           }
         },
-        "ImageId": "ami-90eb64e3",
+        "ImageId": {
+          "Fn::FindInMap": [
+            "Ami2SiteType",
+            { "Ref": "SiteType" }
+          ]
+        },
         "InstanceType": {
           "Ref": "InstanceType"
         },
