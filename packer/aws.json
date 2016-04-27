@@ -18,8 +18,9 @@
   }],
   "provisioners":[ {
     "type": "shell",
+    "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
     "inline": [
-      "mkdir /etc/salt; /bin/true;",
+      "[ ! -d /etc/salt ] && mkdir /etc/salt",
       "echo 'provider: ec2' >> /etc/salt/grains",
       "echo 'site_type: {{user `site_type`}}' >> /etc/salt/grains"
     ]
