@@ -13,7 +13,7 @@
         <!-- Running packer for aws -->
         <exec command="AWS_PROFILE=${aws.profile} ${packer.path} build --var site_type=${project.siteType}
             --var aws_region=${aws.region} --var mysql_password=${drupal.db.password}
-            --var virtuoso_password=${sparql.password} --var doc_root=${project.docroot} aws.json"
+            --var virtuoso_password=${sparql.password} --var doc_root=/srv/project/${documentroot.path} aws.json"
           passthru="true" dir="vendor/ec-europa/infra/packer"
 
             />
