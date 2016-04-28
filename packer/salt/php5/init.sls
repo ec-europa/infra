@@ -14,6 +14,7 @@ php5-stack:
       - php5-mcrypt
       - php5-memcached
       - php5-cli
+      - php5-curl
     - require:
       - pkg: apache2
 
