@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Joinup single server template",
+  "Description": "Single server template",
   "Parameters": {
     "KeyName": {
       "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instances",
@@ -60,7 +60,8 @@
   "Mappings": {
     "Ami2SiteType": {
       "eu-west-1": {
-        "joinup": "ami-8677f9f5"
+        "joinup": "ami-8677f9f5",
+        "subsite": "ami-xxxxxxx"
       }
     }
   },
@@ -188,7 +189,9 @@
                 "",
                 [
                   { "Ref": "env" },
-                  ".joinup.",
+                  ".",
+                  { "Ref": "ApplicationName" },
+                  ".",
                   { "Ref": "HostedZone" },
                   "."
                 ]
@@ -207,7 +210,9 @@
                 [
                   "*.",
                   { "Ref": "env" },
-                  ".joinup.",
+                  ".",
+                  { "Ref": "ApplicationName" },
+                  ".",
                   { "Ref": "HostedZone" },
                   "."
                 ]
@@ -354,7 +359,9 @@
           [
             "http://",
             { "Ref": "env" },
-            ".joinup.",
+            ".",
+            { "Ref": "ApplicationName" },
+            ".",
             { "Ref": "HostedZone" },
             "/"
           ]
