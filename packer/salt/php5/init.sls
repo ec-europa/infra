@@ -1,3 +1,13 @@
+php56-repository:
+  pkgrepo.managed:
+    - humanname: php56-repository
+    - name: deb http://ppa.launchpad.net/ondrej/php5-5.6/ubuntu trusty main
+    - file: /etc/apt/sources.list.d/php56.list
+    - keyid: E5267A6C
+    - keyserver: keyserver.ubuntu.com
+    - refresh_db: true
+
+
 php5-stack:
   pkg.installed:
     - pkgs:
@@ -17,5 +27,6 @@ php5-stack:
       - php5-curl
     - require:
       - pkg: apache2
+      - pkgrepo: php56-repository
 
 
