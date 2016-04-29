@@ -9,6 +9,7 @@
 
     <property name="sparql.password" value="" />
 
+
     <target name="build-ec2-ami">
         <!-- Running packer for aws -->
         <exec command="AWS_PROFILE=${aws.profile} ${packer.path} build --var site_type=${project.siteType}
@@ -21,9 +22,24 @@
 
     <target name="build-virtualbox-image">
         <!-- Running packer for virtualbox -->
-        <exec command="${packer.path} build --var site_type=${project.siteType}  virtualbox.json"
-              passthru="true" dir="vendor/ec-europa/infra/packer"/>
+        <exec command="${packer.path} build --var site_type=${project.siteType}
+            --var mysql_password=${drupal.db.password}
+            --var virtuoso_password=${sparql.password} --var doc_root=/srv/project/${documentroot.path} virtualbox.json"
+          passthru="true" dir="vendor/ec-europa/infra/packer"
+
+            />
     </target>
+    
+    <target name="build-docker-image">
+        <!-- Running packer for docker -->
+        <exec command="${packer.path} build --var site_type=${project.siteType}
+            --var mysql_password=${drupal.db.password}
+            --var virtuoso_password=${sparql.password} --var doc_root=/srv/project/${documentroot.path} docker.json"
+          passthru="true" dir="vendor/ec-europa/infra/packer"
+
+            />
+    </target>
+
 
     <target name="setup-aws">
         <property name="aws.profile" value="" />
