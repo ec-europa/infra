@@ -1,0 +1,60 @@
+{
+  "variables": {
+    "site_type": "",
+    "mysql_password": "",
+    "virtuoso_password": "",
+    "project_root": "",
+    "app_name": "",
+    "deploy_method": "",
+    "instance_tag":"latest"
+
+  },
+  "builders": [{
+    "type": "docker",
+    "image": "{{user `site_type`}}-dev-instance:{{user `instance_tag`}}",
+    "commit": true,
+    "pull": false,
+    "volumes": {
+      "{{user `project_root`}}": "/srv/user-project"
+    }
+  }],
+  "_comment": "Here we HAVE TO cleanly kill virtuoso or it won't boot up again. Docker-fuck-init ftw ...",
+  "provisioners":[ {
+    "type": "shell",
+    "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+    "inline": [
+      "echo 'provider: docker' > /etc/salt/grains",
+      "echo 'site_type: {{user `site_type`}}' >> /etc/salt/grains",
+      "echo 'mysql_password: {{user `mysql_password`}}' >> /etc/salt/grains",
+      "echo 'virtuoso_password: {{user `virtuoso_password`}}' >> /etc/salt/grains",
+      "echo 'doc_root: {{user `doc_root`}}' >> /etc/salt/grains"
+    ]
+  },{
+    "type": "salt-masterless",
+    "local_state_tree": "salt",
+    "skip_bootstrap": true
+  },{
+    "type": "shell",
+    "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+    "inline": [
+      "[ -d /srv/project ] || mkdir /srv/project",
+      "rsync -avz --exclude-from=/srv/user-project/.gitignore --exclude=.git --delete /srv/user-project/ /srv/project/",
+      "cp -f /usr/local/etc/subsite/subsite.tmp.ini /usr/local/etc/subsite/subsite.ini",
+      "cd /srv/project",
+      "git init",
+      "[ -x /etc/init.d/virtuoso-opensource-7 ] && (/etc/init.d/virtuoso-opensource-7 status || /etc/init.d/virtuoso-opensource-7 start)",
+      "/usr/local/bin/composer install",
+      "PATH=./vendor/bin:./bin:$PATH phing -propertyfile /usr/local/etc/subsite/subsite.ini build-dev",
+      "echo 'Installing site ...'",
+      "PATH=./vendor/bin:./bin:$PATH phing -propertyfile /usr/local/etc/subsite/subsite.ini {{user `deploy_method`}}",
+      "[ -x /etc/init.d/virtuoso-opensource-7 ] && (/etc/init.d/virtuoso-opensource-7 status && /etc/init.d/virtuoso-opensource-7 stop)"
+    ]
+  }],
+  "post-processors": [[
+    {
+      "type": "docker-tag",
+      "repository": "{{user `site_type`}}-dev-instance",
+      "tag": "{{user `app_name`}}-latest"
+    }
+  ]]
+}
