@@ -29,11 +29,23 @@ drupal-solr-config-downloaded:
     - require:
       - archive: solr-server-downloaded
 
+/opt/solr-5.5.0/server/solr/drupal/conf:
+  file.directory:
+    - user: nobody
+    - group: nobody
+    - mode: 755
+    - makedirs: True
+    - require:
+      - archive: solr-server-downloaded
+
 drupal-solr-config-installed:
   cmd.wait:
     - name: rsync -avz /opt/search_api_solr/solr-conf/5.x/  /opt/solr-5.5.0/server/solr/drupal/conf/
+    - creates: /opt/solr-5.5.0/server/solr/drupal/conf/schema.xml
     - watch:
       - archive: drupal-solr-config-downloaded
+    - require:
+      - file: /opt/solr-5.5.0/server/solr/drupal/conf
 
 solr-supervisor-config-installed:
   file.managed:
@@ -42,7 +54,7 @@ solr-supervisor-config-installed:
       - pkg: solr-stack
 
 solr-server-running:
-  supervisor.running:
+  supervisord.running:
     - name: solr5
     - update: true
     - require:
@@ -52,4 +64,4 @@ solr-drupal-core-enabled:
   cmd.wait:
     - name: /opt/solr-5.5.0/bin/solr create_core -c drupal
     - watch:
-      - supervisor: solr-server-running
+      - supervisord: solr-server-running
