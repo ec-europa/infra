@@ -7,8 +7,10 @@ base:
     - apache2
     - php5
     - mysql
-    - solr
     - mailcatcher
+  'site_type:subsite':
+    - match: grain
+    - solr5
   'site_type:joinup':
     - match: grain
     - virtuoso-opensource-7

@@ -8,8 +8,9 @@ virtuoso-repository:
 virtuoso-server:
   pkg.installed:
     - refresh: True
-  service.running:
+  {{ grains['service_provider'] }}.running:
     - name: virtuoso-opensource-7
+    - update: true
     - require:
       - file: virtuoso-default-file-installed
 
@@ -35,7 +36,7 @@ virtuoso-setup-password:
     - name: echo set password dba {{ grains['virtuoso_password'] }}|isql "VOS" dba dba
     - creates: /etc/virtuoso-opensource-7/secured
     - watch:
-      - service: virtuoso-server
+      - {{ grains['service_provider'] }}: virtuoso-server
 
 mark-virtuoso-secured:
   cmd.wait:
@@ -58,10 +59,18 @@ properties-virtuoso-tmp-config:
 
 {% if grains['provider'] == 'docker' %}
 clean-virtuoso-shutdown:
-  service.dead:
+  {{ grains['service_provider'] }}.dead:
     - name: virtuoso-opensource-7
     - require:
       - cmd: virtuoso-setup-password
+
+/etc/supervisor/conf.d/virtuoso-opensource-7.conf:
+    file.managed:
+      - source: salt://virtuoso-opensource-7/supervisor.conf
+      - require:
+        - pkg: supervisor-docker-stack
+      - require_in:
+        - {{ grains['service_provider'] }}: virtuoso-server
 
 {% endif %}
 

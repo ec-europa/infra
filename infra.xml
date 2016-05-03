@@ -104,7 +104,7 @@
     </target>
 
     <target name="site-update">
-        <drush command="updb" assume="yes" root="/srv/project/${documentroot.path}"
+        <drush command="updb" assume="yes" root="${project.basedir}/${documentroot.path}"
                bin="${drush.bin}"/>
     </target>
 

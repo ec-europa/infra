@@ -64,6 +64,7 @@
             "echo 'mysql_password: {{user `mysql_password`}}' >> /etc/salt/grains",
             "echo 'virtuoso_password: {{user `virtuoso_password`}}' >> /etc/salt/grains",
             "echo 'doc_root: {{user `doc_root`}}' >> /etc/salt/grains",
+            "echo 'service_provider: service' >> /etc/salt/grains",
             "[ -d /srv/project ] && rm -Rf /srv/project",
             "mkdir /srv/project && chown ubuntu:ubuntu /srv/project"
         ]

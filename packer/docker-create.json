@@ -18,6 +18,7 @@
       "apt-get install curl -y",
       "[ ! -d /etc/salt ] && mkdir /etc/salt",
       "echo 'provider: docker' >> /etc/salt/grains",
+      "echo 'service_provider: supervisor' >> /etc/salt/grains",
       "echo 'site_type: {{user `site_type`}}' >> /etc/salt/grains",
       "echo 'mysql_password: {{user `mysql_password`}}' >> /etc/salt/grains",
       "echo 'virtuoso_password: {{user `virtuoso_password`}}' >> /etc/salt/grains",
@@ -31,7 +32,7 @@
     "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
     "inline": [
       "cp -f /usr/local/etc/subsite/subsite.tmp.ini /usr/local/etc/subsite/subsite.ini",
-      "[ -x /etc/init.d/virtuoso-opensource-7 ] && (/etc/init.d/virtuoso-opensource-7 status && /etc/init.d/virtuoso-opensource-7 stop)"
+      "supervisorctl shutdown"
     ]
   }],
   "post-processors": [[

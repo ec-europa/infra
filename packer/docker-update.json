@@ -24,6 +24,7 @@
     "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
     "inline": [
       "echo 'provider: docker' > /etc/salt/grains",
+      "echo 'service_provider: supervisor' >> /etc/salt/grains",
       "echo 'site_type: {{user `site_type`}}' >> /etc/salt/grains",
       "echo 'mysql_password: {{user `mysql_password`}}' >> /etc/salt/grains",
       "echo 'virtuoso_password: {{user `virtuoso_password`}}' >> /etc/salt/grains",
@@ -42,12 +43,12 @@
       "cp -f /usr/local/etc/subsite/subsite.tmp.ini /usr/local/etc/subsite/subsite.ini",
       "cd /srv/project",
       "git init",
-      "[ -x /etc/init.d/virtuoso-opensource-7 ] && (/etc/init.d/virtuoso-opensource-7 status || /etc/init.d/virtuoso-opensource-7 start)",
+      "supervisorctl start all",
       "/usr/local/bin/composer install",
-      "PATH=./vendor/bin:./bin:$PATH phing -propertyfile /usr/local/etc/subsite/subsite.ini build-dev",
+      "PATH=./bin:./vendor/bin:$PATH phing -propertyfile /usr/local/etc/subsite/subsite.ini build-dev",
       "echo 'Installing site ...'",
-      "PATH=./vendor/bin:./bin:$PATH phing -propertyfile /usr/local/etc/subsite/subsite.ini {{user `deploy_method`}}",
-      "[ -x /etc/init.d/virtuoso-opensource-7 ] && (/etc/init.d/virtuoso-opensource-7 status && /etc/init.d/virtuoso-opensource-7 stop)"
+      "PATH=./bin:./vendor/bin:$PATH phing -propertyfile /usr/local/etc/subsite/subsite.ini {{user `deploy_method`}}",
+      "supervisorctl shutdown"
     ]
   }],
   "post-processors": [[

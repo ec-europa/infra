@@ -3,7 +3,8 @@ mysql-server:
 
 
 mysql-service:
-  service.running:
+  {{ grains['service_provider'] }}.running:
+    - update: true
     - name: mysql
 
 mysql_set_root_pw:
@@ -49,4 +50,6 @@ properties-mysql-tmp-config:
       - source: salt://mysql/supervisor.conf
       - require:
         - pkg: supervisor-docker-stack
+      - require_in:
+        - {{ grains['service_provider'] }}: mysql-service
 {% endif %}
