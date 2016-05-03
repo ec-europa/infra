@@ -13,7 +13,7 @@ solr-server-downloaded:
     - archive_format: tar
     - tar_options: v
     - user: nobody
-    - group: nobody
+    - group: nogroup
     - if_missing: /opt/solr-5.5.0/
 
 drupal-solr-config-downloaded:
@@ -24,7 +24,7 @@ drupal-solr-config-downloaded:
     - archive_format: tar
     - tar_options: v
     - user: nobody
-    - group: nobody
+    - group: nogroup
     - if_missing: /opt/search_api_solr
     - require:
       - archive: solr-server-downloaded
@@ -32,7 +32,7 @@ drupal-solr-config-downloaded:
 /opt/solr-5.5.0/server/solr/drupal/conf:
   file.directory:
     - user: nobody
-    - group: nobody
+    - group: nogroup
     - mode: 755
     - makedirs: True
     - require:
