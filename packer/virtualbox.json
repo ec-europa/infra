@@ -3,25 +3,31 @@
         "ssh_name": "ubuntu",
         "ssh_pass": "ubuntu",
         "hostname": "site-dev",
-        "site_type": ""
+        "site_type": "",
+        "mysql_password": "",
+        "virtuoso_password": "",
+        "project_root": "",
+        "app_name": ""
     },
 
     "builders": [{
         "type": "virtualbox-iso",
         "guest_os_type": "Ubuntu_64",
-
+        "format": "ova",
+        "headless": "true",
+        "vm_name": "{{user `app_name`}}-{{user `site_type`}}-dev-instance",
         "vboxmanage": [
             ["modifyvm", "{{.Name}}", "--vram", "1"]
         ],
         "disk_size" : 10000,
-
-        "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04.4-server-amd64.iso",
+        "output_directory": "output-virtualbox-{{user `app_name`}}-{{user `site_type`}}-dev-instance",
+        "iso_url": "http://mirrors.ircam.fr/pub/ubuntu/releases/14.04/ubuntu-14.04.4-server-amd64.iso",
         "iso_checksum": "07e4bb5569814eab41fafac882ba127893e3ff0bdb7ec931c9b2d040e3e94e7a",
         "iso_checksum_type": "sha256",
 
         "http_directory" : "virtualbox",
         "http_port_min" : 9001,
-        "http_port_max" : 9001,
+        "http_port_max" : 9100,
 
         "ssh_username": "{{user `ssh_name`}}",
         "ssh_password": "{{user `ssh_pass`}}",
@@ -41,7 +47,7 @@
             "initrd=/install/initrd.gz -- <enter>"
         ]
     }],
-    "provisioners":[ {
+    "provisioners":[{
         "type": "shell",
         "execute_command": "echo '{{user `ssh_pass`}}' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
         "inline": [
@@ -52,12 +58,33 @@
         "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
         "inline": [
             "apt-get install virtualbox-guest-dkms curl -y",
-            "[ ! -d /etc/salt ] && sudo mkdir /etc/salt",
-            "echo 'provider: virtualbox' >> /etc/salt/grains",
-            "echo 'site_type: {{user `site_type`}}' >> /etc/salt/grains"
+            "[ ! -d /etc/salt ] && mkdir /etc/salt",
+            "echo 'provider: virtualbox' > /etc/salt/grains",
+            "echo 'site_type: {{user `site_type`}}' >> /etc/salt/grains",
+            "echo 'mysql_password: {{user `mysql_password`}}' >> /etc/salt/grains",
+            "echo 'virtuoso_password: {{user `virtuoso_password`}}' >> /etc/salt/grains",
+            "echo 'doc_root: {{user `doc_root`}}' >> /etc/salt/grains",
+            "[ -d /srv/project ] && rm -Rf /srv/project",
+            "mkdir /srv/project && chown ubuntu:ubuntu /srv/project"
         ]
+    },{
+      "type": "file",
+      "source": "{{user `project_root`}}/",
+      "destination": "/srv/project/"
     },{
         "type": "salt-masterless",
         "local_state_tree": "salt"
+    },{
+        "type": "shell",
+        "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+        "inline": [
+            "cp -f /usr/local/etc/subsite/subsite.tmp.ini /usr/local/etc/subsite/subsite.ini",
+            "cd /srv/project",
+            "rm  -Rf /srv/project/.git /srv/project/vendor && git init",
+            "/usr/local/bin/composer install",
+            "PATH=./vendor/bin:./bin:$PATH phing -propertyfile /usr/local/etc/subsite/subsite.ini build-dev",
+            "echo 'Installing site ...'",
+            "PATH=./vendor/bin:./bin:$PATH phing -propertyfile /usr/local/etc/subsite/subsite.ini install"
+        ]
     }]
 }

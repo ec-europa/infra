@@ -9,37 +9,60 @@
 
     <property name="sparql.password" value="" />
 
+    <property name="packer.path" value="/usr/bin/env packer" />
+    <property name="docker.path" value="/usr/bin/env docker" />
+    <property name="docker.http.port" value="8888" />
+    <property name="docker.ssh.port" value="2222" />
+    <property name="application.name" value="unset" />
 
-    <target name="build-ec2-ami">
+    <property name="packer.global.settings" value="
+        --var mysql_password=${drupal.db.password} --var site_type=${project.siteType}
+        --var app_name=${application.name} --var virtuoso_password=${sparql.password}
+        --var doc_root=/srv/project/${documentroot.path}" />
+
+
+
+    <target name="build-cloudformation-ami" description="Create skeleton AMI in EC2 to run ${project.siteType}">
         <!-- Running packer for aws -->
-        <exec command="AWS_PROFILE=${aws.profile} ${packer.path} build --var site_type=${project.siteType}
-            --var aws_region=${aws.region} --var mysql_password=${drupal.db.password}
-            --var virtuoso_password=${sparql.password} --var doc_root=/srv/project/${documentroot.path} aws.json"
-          passthru="true" dir="vendor/ec-europa/infra/packer"
-
-            />
+        <exec command="AWS_PROFILE=${aws.profile} ${packer.path} build
+            --var aws_region=${aws.region} ${packer.global.settings} aws.json"
+          passthru="true" dir="vendor/ec-europa/infra/packer"/>
     </target>
 
-    <target name="build-virtualbox-image">
+    <target name="build-virtualbox-image" description="Create a deployable OVA from current project">
         <!-- Running packer for virtualbox -->
-        <exec command="${packer.path} build --var site_type=${project.siteType}
-            --var mysql_password=${drupal.db.password}
-            --var virtuoso_password=${sparql.password} --var doc_root=/srv/project/${documentroot.path} virtualbox.json"
-          passthru="true" dir="vendor/ec-europa/infra/packer"
-
-            />
+        <exec command="${packer.path} build
+            --var project_root=${project.basedir} ${packer.global.settings} virtualbox.json"
+          passthru="true" dir="vendor/ec-europa/infra/packer"/>
     </target>
     
-    <target name="build-docker-image">
+    <target name="docker-create-instance" description="Create a base docker image to run ${project.siteType} applications">
         <!-- Running packer for docker -->
-        <exec command="${packer.path} build --var site_type=${project.siteType}
-            --var mysql_password=${drupal.db.password}
-            --var virtuoso_password=${sparql.password} --var doc_root=/srv/project/${documentroot.path} docker.json"
-          passthru="true" dir="vendor/ec-europa/infra/packer"
-
-            />
+        <exec command="${packer.path} build --var project_root=${project.basedir}
+            ${packer.global.settings} docker-create.json"
+          passthru="true" dir="vendor/ec-europa/infra/packer"/>
     </target>
 
+    <target name="docker-install-app" description="Create a ${application.name} instance from ${project.siteType} image">
+        <!-- Running packer for docker -->
+        <exec command="${packer.path} build --var deploy_method=install --var project_root=${project.basedir}
+           ${packer.global.settings} docker-update.json"
+              passthru="true" dir="vendor/ec-europa/infra/packer"/>
+    </target>
+
+    <target name="docker-update-app" description="Update ${application.name} instance">
+        <!-- Running packer for docker -->
+        <exec command="${packer.path} build --var deploy_method=site-update --var project_root=${project.basedir}
+           ${packer.global.settings} --var instance_tag=${application.name}-latest docker-update.json"
+              passthru="true" dir="vendor/ec-europa/infra/packer"/>
+    </target>
+
+    <target name="docker-run-app" description="Run an instance of ${application.name}">
+        <!-- Running packer for docker -->
+        <exec command="${docker.path} run  -t -i -p 8080:80 -p 10080:8081 ${project.siteType}-dev-instance:${application.name}-latest supervisord -n"
+              passthru="true"
+        />
+    </target>
 
     <target name="setup-aws">
         <property name="aws.profile" value="" />
@@ -78,6 +101,11 @@
                 application="${deploy.applicationName}">
             <ec2TagFilter key="stack" value="${deploy.applicationName}-${cf.stackName}" />
         </aws-deploy-deployment-group>
+    </target>
+
+    <target name="site-update">
+        <drush command="updb" assume="yes" root="${website.drupal.dir}"
+               bin="${drush.bin}"/>
     </target>
 
 </project>

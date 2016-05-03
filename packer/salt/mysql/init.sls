@@ -33,7 +33,7 @@ drop_empty_passwords:
     - require:
       - mysql_grants: mysql_set_root_pw_grants
 
-cloudformation-mysql-tmp-config:
+properties-mysql-tmp-config:
   file.append:
     - name: /usr/local/etc/subsite/subsite.tmp.ini
     - makedirs: True
@@ -42,3 +42,11 @@ cloudformation-mysql-tmp-config:
       - "drupal.db.name=subsite"
       - "drupal.db.user=root"
       - "drupal.db.password={{ grains['mysql_password'] }}"
+
+{% if grains['provider'] == 'docker' %}
+/etc/supervisor/conf.d/mysql.conf:
+    file.managed:
+      - source: salt://mysql/supervisor.conf
+      - require:
+        - pkg: supervisor-docker-stack
+{% endif %}

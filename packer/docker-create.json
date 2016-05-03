@@ -2,8 +2,8 @@
   "variables": {
     "site_type": "",
     "mysql_password": "",
-    "virtuoso_password": ""
-
+    "virtuoso_password": "",
+    "project_root": ""
   },
   "builders": [{
     "type": "docker",
@@ -26,5 +26,19 @@
   },{
     "type": "salt-masterless",
     "local_state_tree": "salt"
-  }]
+  },{
+    "type" : "shell",
+    "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+    "inline": [
+      "cp -f /usr/local/etc/subsite/subsite.tmp.ini /usr/local/etc/subsite/subsite.ini",
+      "[ -x /etc/init.d/virtuoso-opensource-7 ] && (/etc/init.d/virtuoso-opensource-7 status && /etc/init.d/virtuoso-opensource-7 stop)"
+    ]
+  }],
+  "post-processors": [[
+    {
+      "type": "docker-tag",
+      "repository": "{{user `site_type`}}-dev-instance",
+      "tag": "latest"
+    }
+  ]]
 }

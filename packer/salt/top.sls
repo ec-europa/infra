@@ -1,5 +1,9 @@
 base:
+  'provider:docker':
+    - match: grain
+    - supervisor-docker
   '*':
+    - common
     - apache2
     - php5
     - mysql
@@ -11,3 +15,4 @@ base:
   'provider:ec2':
     - match: grain
     - aws
+

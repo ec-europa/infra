@@ -33,10 +33,17 @@ virtuoso-odbc-ini-installed:
 virtuoso-setup-password:
   cmd.wait:
     - name: echo set password dba {{ grains['virtuoso_password'] }}|isql "VOS" dba dba
+    - creates: /etc/virtuoso-opensource-7/secured
     - watch:
       - service: virtuoso-server
 
-cloudformation-virtuoso-tmp-config:
+mark-virtuoso-secured:
+  cmd.wait:
+    - name: echo 1 > /etc/virtuoso-opensource-7/secured
+    - watch:
+      - cmd: virtuoso-setup-password
+
+properties-virtuoso-tmp-config:
   file.append:
     - name: /usr/local/etc/subsite/subsite.tmp.ini
     - makedirs: True
@@ -49,4 +56,12 @@ cloudformation-virtuoso-tmp-config:
 
 
 
+{% if grains['provider'] == 'docker' %}
+clean-virtuoso-shutdown:
+  service.dead:
+    - name: virtuoso-opensource-7
+    - require:
+      - cmd: virtuoso-setup-password
+
+{% endif %}
 
