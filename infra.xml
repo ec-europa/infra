@@ -18,7 +18,7 @@
     <property name="packer.global.settings" value="
         --var mysql_password=${drupal.db.password} --var site_type=${project.siteType}
         --var app_name=${application.name} --var virtuoso_password=${sparql.password}
-        --var doc_root=${project.basedir}/${documentroot.path}" />
+        --var doc_root=/srv/project/${documentroot.path}" />
 
 
 
@@ -104,7 +104,7 @@
     </target>
 
     <target name="site-update">
-        <drush command="updb" assume="yes" root="${website.drupal.dir}"
+        <drush command="updb" assume="yes" root="/srv/project/${documentroot.path}"
                bin="${drush.bin}"/>
     </target>
 
