@@ -1,3 +1,9 @@
+supervisor-docker-service:
+  service.running:
+    - name: supervisor
+    - require:
+      - file: supervisor-docker-config
+
 supervisor-docker-stack:
   pkg.installed:
     - pkgs:
