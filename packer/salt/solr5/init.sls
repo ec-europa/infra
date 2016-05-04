@@ -49,6 +49,7 @@ drupal-solr-config-installed:
 
 solr-supervisor-config-installed:
   file.managed:
+    - source: salt://solr5/supervisor.conf
     - name: /etc/supervisor/conf.d/solr5.conf
     - require:
       - pkg: solr-stack
@@ -62,6 +63,8 @@ solr-server-running:
 
 solr-drupal-core-enabled:
   cmd.wait:
-    - name: /opt/solr-5.5.0/bin/solr create_core -c drupal
+    - name: sleep 15 && /opt/solr-5.5.0/bin/solr create_core -c drupal
+    - cwd: /opt/solr-5.5.0
+    - creates: /opt/solr-5.5.0/server/solr/drupal/core.properties
     - watch:
       - supervisord: solr-server-running

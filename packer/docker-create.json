@@ -32,7 +32,9 @@
     "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
     "inline": [
       "cp -f /usr/local/etc/subsite/subsite.tmp.ini /usr/local/etc/subsite/subsite.ini",
-      "supervisorctl shutdown"
+      "supervisorctl shutdown",
+      "rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*",
+      "apt-cache clean"
     ]
   }],
   "post-processors": [[
