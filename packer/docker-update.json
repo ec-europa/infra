@@ -28,7 +28,8 @@
       "echo 'site_type: {{user `site_type`}}' >> /etc/salt/grains",
       "echo 'mysql_password: {{user `mysql_password`}}' >> /etc/salt/grains",
       "echo 'virtuoso_password: {{user `virtuoso_password`}}' >> /etc/salt/grains",
-      "echo 'doc_root: {{user `doc_root`}}' >> /etc/salt/grains"
+      "echo 'doc_root: {{user `doc_root`}}' >> /etc/salt/grains",
+      "/etc/init.d/supervisor start"
     ]
   },{
     "type": "salt-masterless",
