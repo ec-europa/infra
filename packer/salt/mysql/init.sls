@@ -13,7 +13,7 @@ mysql_set_root_pw:
     - host: "%"
     - password: "{{ grains['mysql_password'] }}"
     - require:
-      - service: mysql-service
+      - {{ grains['service_provider'] }}: mysql-service
     - connection_default_file: /etc/mysql/debian.cnf
 
 mysql_set_root_pw_grants:
