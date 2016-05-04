@@ -34,7 +34,7 @@
       "cp -f /usr/local/etc/subsite/subsite.tmp.ini /usr/local/etc/subsite/subsite.ini",
       "supervisorctl shutdown",
       "rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*",
-      "apt-cache clean"
+      "apt-get clean"
     ]
   }],
   "post-processors": [[
