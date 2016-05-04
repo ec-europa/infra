@@ -11,8 +11,8 @@
 
     <property name="packer.path" value="/usr/bin/env packer" />
     <property name="docker.path" value="/usr/bin/env docker" />
-    <property name="docker.http.port" value="8888" />
-    <property name="docker.ssh.port" value="2222" />
+    <property name="docker.http.port" value="8580" />
+    <property name="docker.mailcatcher.port" value="8581" />
     <property name="application.name" value="unset" />
 
     <property name="packer.global.settings" value="
@@ -59,7 +59,7 @@
 
     <target name="docker-run-app" description="Run an instance of ${application.name}">
         <!-- Running packer for docker -->
-        <exec command="${docker.path} run  -t -i -p 8080:80 -p 10080:8081 ${project.siteType}-dev-instance:${application.name}-latest /start.sh"
+        <exec command="${docker.path} run  -t -i -p ${docker.http.port}:80 -p ${docker.mailcatcher.port}:10080 ${project.siteType}-dev-instance:${application.name}-latest /start.sh"
               passthru="true"
         />
     </target>
