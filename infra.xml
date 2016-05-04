@@ -16,13 +16,13 @@
     <property name="application.name" value="unset" />
 
     <property name="packer.global.settings" value="
-        --var mysql_password=${drupal.db.password} --var site_type=${project.siteType}
+        --var mysql_password=${drupal.db.password} --var site_type=${infra.type}
         --var app_name=${application.name} --var virtuoso_password=${sparql.password}
         --var doc_root=/srv/project/${documentroot.path}" />
 
 
 
-    <target name="build-cloudformation-ami" description="Create skeleton AMI in EC2 to run ${project.siteType}">
+    <target name="build-cloudformation-ami" description="Create skeleton AMI in EC2 to run ${infra.type}">
         <!-- Running packer for aws -->
         <exec command="AWS_PROFILE=${aws.profile} ${packer.path} build
             --var aws_region=${aws.region} ${packer.global.settings} aws.json"
@@ -36,14 +36,14 @@
           passthru="true" dir="vendor/ec-europa/infra/packer"/>
     </target>
     
-    <target name="docker-create-instance" description="Create a base docker image to run ${project.siteType} applications">
+    <target name="docker-create-instance" description="Create a base docker image to run ${infra.type} applications">
         <!-- Running packer for docker -->
         <exec command="${packer.path} build --var project_root=${project.basedir}
             ${packer.global.settings} docker-create.json"
           passthru="true" dir="vendor/ec-europa/infra/packer"/>
     </target>
 
-    <target name="docker-install-app" description="Create a ${application.name} instance from ${project.siteType} image">
+    <target name="docker-install-app" description="Create a ${application.name} instance from ${infra.type} image">
         <!-- Running packer for docker -->
         <exec command="${packer.path} build --var deploy_method=install --var project_root=${project.basedir}
            ${packer.global.settings} docker-update.json"
@@ -59,7 +59,7 @@
 
     <target name="docker-run-app" description="Run an instance of ${application.name}">
         <!-- Running packer for docker -->
-        <exec command="${docker.path} run  -t -i -p ${docker.http.port}:80 -p ${docker.mailcatcher.port}:10080 ${project.siteType}-dev-instance:${application.name}-latest /start.sh"
+        <exec command="${docker.path} run  -t -i -p ${docker.http.port}:80 -p ${docker.mailcatcher.port}:10080 ${infra.type}-dev-instance:${application.name}-latest /start.sh"
               passthru="true"
         />
     </target>
@@ -88,7 +88,7 @@
             <param name="KeyName" value="${cf.KeyName}" />
             <param name="ApplicationName" value="${deploy.applicationName}" />
             <param name="env" value="${cf.stackName}" />
-            <param name="SiteType" value="${project.siteType}" />
+            <param name="SiteType" value="${infra.type}" />
         </aws-cf-runstack>
     </target>
 
