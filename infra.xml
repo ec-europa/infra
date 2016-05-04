@@ -59,7 +59,7 @@
 
     <target name="docker-run-app" description="Run an instance of ${application.name}">
         <!-- Running packer for docker -->
-        <exec command="${docker.path} run  -t -i -p 8080:80 -p 10080:8081 ${project.siteType}-dev-instance:${application.name}-latest supervisord -n"
+        <exec command="${docker.path} run  -t -i -p 8080:80 -p 10080:8081 ${project.siteType}-dev-instance:${application.name}-latest /start.sh"
               passthru="true"
         />
     </target>

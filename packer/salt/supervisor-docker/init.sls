@@ -16,3 +16,8 @@ supervisor-docker-config:
     - source: salt://supervisor-docker/supervisor.conf
     - require:
       - pkg: supervisor-docker-stack
+
+/start.sh:
+  file.managed:
+    - source: salt://supervisor-docker/start.sh
+    - mode: 755
