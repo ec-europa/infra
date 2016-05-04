@@ -1,11 +1,16 @@
 mysql-server:
   pkg.installed
 
-
 mysql-service:
   {{ grains['service_provider'] }}.running:
     - update: true
     - name: mysql
+
+mysql-service-started:
+  cmd.wait:
+    - name: sleep 15
+    - watch:
+      - {{ grains['service_provider'] }}: mysql-service
 
 mysql_set_root_pw:
   mysql_user.present:
@@ -13,7 +18,7 @@ mysql_set_root_pw:
     - host: "%"
     - password: "{{ grains['mysql_password'] }}"
     - require:
-      - {{ grains['service_provider'] }}: mysql-service
+      - cmd: mysql-service-started
     - connection_default_file: /etc/mysql/debian.cnf
 
 mysql_set_root_pw_grants:
