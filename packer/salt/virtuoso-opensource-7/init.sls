@@ -24,6 +24,13 @@ virtuoso-default-file-installed:
 unixodbc:
   pkg.installed
 
+virtuoso-ini-installed:
+  file.managed:
+    - source: salt://virtuoso-opensource-7/virtuoso.ini
+    - name: /etc/virtuoso-opensource-7/virtuoso.ini
+    - require:
+      - pkg: virtuoso-server
+
 virtuoso-odbc-ini-installed:
   file.managed:
     - source: salt://virtuoso-opensource-7/odbc.ini

@@ -22,7 +22,7 @@
 
 
 
-    <target name="build-cloudformation-ami" description="Create skeleton AMI in EC2 to run ${infra.type}">
+    <target name="build-cloudformation-ami" description="Create skeleton AMI in EC2">
         <!-- Running packer for aws -->
         <exec command="AWS_PROFILE=${aws.profile} ${packer.path} build
             --var aws_region=${aws.region} ${packer.global.settings} aws.json"
@@ -36,28 +36,28 @@
           passthru="true" dir="vendor/ec-europa/infra/packer"/>
     </target>
     
-    <target name="docker-create-instance" description="Create a base docker image to run ${infra.type} applications">
+    <target name="docker-create-instance" description="Create a base docker image to run applications">
         <!-- Running packer for docker -->
         <exec command="${packer.path} build --var project_root=${project.basedir}
             ${packer.global.settings} docker-create.json"
           passthru="true" dir="vendor/ec-europa/infra/packer"/>
     </target>
 
-    <target name="docker-install-app" description="Create a ${application.name} instance from ${infra.type} image">
+    <target name="docker-install-app" description="Create a instance from the base docker image">
         <!-- Running packer for docker -->
         <exec command="${packer.path} build --var deploy_method=install --var project_root=${project.basedir}
            ${packer.global.settings} docker-update.json"
               passthru="true" dir="vendor/ec-europa/infra/packer"/>
     </target>
 
-    <target name="docker-update-app" description="Update ${application.name} instance">
+    <target name="docker-update-app" description="Update the application instance">
         <!-- Running packer for docker -->
         <exec command="${packer.path} build --var deploy_method=site-update --var project_root=${project.basedir}
            ${packer.global.settings} --var instance_tag=${application.name}-latest docker-update.json"
               passthru="true" dir="vendor/ec-europa/infra/packer"/>
     </target>
 
-    <target name="docker-run-app" description="Run an instance of ${application.name}">
+    <target name="docker-run-app" description="Run an instance of the application">
         <!-- Running packer for docker -->
         <exec command="${docker.path} run  -t -i -p ${docker.http.port}:80 -p ${docker.mailcatcher.port}:1080 ${infra.type}-dev-instance:${application.name}-latest /start.sh"
               passthru="true"
