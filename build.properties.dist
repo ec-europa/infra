@@ -1,0 +1,20 @@
+# Infra type you're working with 
+
+infra.type = subsite
+documentroot.path = platform
+
+# Default passwords 
+drupal.db.password = unsecure
+sparql.password = unsecure
+
+# Path of tools :
+
+packer.path = /usr/bin/env packer
+docker.path = /usr/bin/env docker
+self.path = .
+
+# AWS settings
+
+aws.profile = default
+aws.region = eu-west-1
+deploy.serviceRole = arn:aws:iam::918396081007:role/CodeDeploy

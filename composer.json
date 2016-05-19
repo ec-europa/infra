@@ -9,5 +9,9 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {}
+    "require": {
+        "phing/phing": "2.*",
+        "pear/archive_tar": "^1.4",
+        "pear/versioncontrol_git": "dev-master"
+    }
 }
