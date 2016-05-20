@@ -65,7 +65,7 @@
     "Ami2SiteType": {
       "eu-west-1": {
         "joinup": "ami-94d344e7",
-        "subsite": "ami-9265ede1"
+        "subsite": "ami-d71285a4"
       }
     }
   },
