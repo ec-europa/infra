@@ -55,6 +55,10 @@
     "ApplicationName": {
       "Type": "String",
       "Description": "The CodeDeploy application name"
+    },
+    "GithubSSHKeys": {
+      "Type": "String",
+      "Description": "Comma separated list of Github user names for SSH public keys"
     }
   },
   "Mappings": {
@@ -286,6 +290,12 @@
                   "Ref": "env"
                 },
                 "' >> /usr/local/etc/subsite/subsite.tmp.ini",
+                "\n",
+                 "echo '",
+                {
+                  "Ref": "GithubSSHKeys"
+                },
+                "' > /etc/github.keys",
                 "\n",
                 "mv /usr/local/etc/subsite/subsite.tmp.ini /usr/local/etc/subsite/subsite.ini",
                 "\n"

@@ -38,3 +38,14 @@ cloud-formation-cron:
     - creates: /etc/cron.d/cf-terminator
     - require:
       - pkg: aws-stack
+
+install-github-key-deployer:
+  file.managed:
+    - name: /usr/local/sbin/deploy-github-keys.sh
+    - source: salt://aws/deploy-github-keys.sh
+    - mode: 755
+  cron.present:
+    - identifier: github-key-deployer
+    - minute: '*/5'
+    - name: /usr/local/sbin/deploy-github-keys.sh
+    - user: root

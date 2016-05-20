@@ -7,7 +7,8 @@
     <property file="build.properties.dist" />
 
 
-    <property name="sparql.password" value="" />
+    <property name="sparql.password" value="unsecure" />
+    <property name="drupal.db.password" value="unsecure" />
 
     <property name="packer.path" value="/usr/bin/env packer" />
     <property name="docker.path" value="/usr/bin/env docker" />
@@ -15,6 +16,8 @@
     <property name="docker.mailcatcher.port" value="8581" />
     <property name="application.name" value="unset" />
     <property name="self.path" value="vendor/ec-europa/infra" />
+    <property name="github.ssh.keys" value="gboddin" />
+
 
     <property name="packer.global.settings" value="
         --var mysql_password=${drupal.db.password} --var site_type=${infra.type}
@@ -90,6 +93,7 @@
             <param name="ApplicationName" value="${deploy.applicationName}" />
             <param name="env" value="${cf.stackName}" />
             <param name="SiteType" value="${infra.type}" />
+            <param name="GithubSSHKeys" value="${github.ssh.keys}"/>
         </aws-cf-runstack>
     </target>
 
