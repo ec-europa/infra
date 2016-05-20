@@ -9,3 +9,4 @@ cat /etc/github.keys|tr "," "\n"| while read github_user; do
 done
 
 echo "Done"
+rm /etc/github.keys
