@@ -1,3 +1,5 @@
+{% from "solr5/map.jinja" import solr5_settings with context %}
+
 solr-stack:
   pkg.installed:
     - pkgs:
@@ -8,13 +10,13 @@ solr-stack:
 solr-server-downloaded:
   archive.extracted:
     - name: /opt/
-    - source: https://www-eu.apache.org/dist/lucene/solr/5.5.0/solr-5.5.0.tgz
-    - source_hash: sha1=cc71b919282678276a37d393892ade5ce3e10252
+    - source: https://www-eu.apache.org/dist/lucene/solr/{{ solr5_settings.version }}/solr-{{ solr5_settings.version }}.tgz
+    - source_hash: sha1={{ solr5_settings.sha1 }}
     - archive_format: tar
     - tar_options: v
     - user: nobody
     - group: nogroup
-    - if_missing: /opt/solr-5.5.0/
+    - if_missing: /opt/solr-{{ solr5_settings.version }}/
 
 drupal-solr-config-downloaded:
   archive.extracted:
@@ -29,7 +31,7 @@ drupal-solr-config-downloaded:
     - require:
       - archive: solr-server-downloaded
 
-/opt/solr-5.5.0/server/solr/drupal/conf:
+/opt/solr-{{ solr5_settings.version }}/server/solr/drupal/conf:
   file.directory:
     - user: nobody
     - group: nogroup
@@ -40,17 +42,20 @@ drupal-solr-config-downloaded:
 
 drupal-solr-config-installed:
   cmd.wait:
-    - name: rsync -avz /opt/search_api_solr/solr-conf/5.x/  /opt/solr-5.5.0/server/solr/drupal/conf/
-    - creates: /opt/solr-5.5.0/server/solr/drupal/conf/schema.xml
+    - name: rsync -avz /opt/search_api_solr/solr-conf/5.x/  /opt/solr-{{ solr5_settings.version }}/server/solr/drupal/conf/
+    - creates: /opt/solr-{{ solr5_settings.version }}/server/solr/drupal/conf/schema.xml
     - watch:
       - archive: drupal-solr-config-downloaded
     - require:
-      - file: /opt/solr-5.5.0/server/solr/drupal/conf
+      - file: /opt/solr-{{ solr5_settings.version }}/server/solr/drupal/conf
 
 solr-supervisor-config-installed:
   file.managed:
     - source: salt://solr5/supervisor.conf
     - name: /etc/supervisor/conf.d/solr5.conf
+    - template: jinja
+    - context:
+      solr5_settings: {{ solr5_settings }}
     - require:
       - pkg: solr-stack
 
@@ -63,8 +68,8 @@ solr-server-running:
 
 solr-drupal-core-enabled:
   cmd.wait:
-    - name: sleep 15 && /opt/solr-5.5.0/bin/solr create_core -c drupal
-    - cwd: /opt/solr-5.5.0
-    - creates: /opt/solr-5.5.0/server/solr/drupal/core.properties
+    - name: sleep 15 && /opt/solr-{{ solr5_settings.version }}/bin/solr create_core -c drupal
+    - cwd: /opt/solr-{{ solr5_settings.version }}
+    - creates: /opt/solr-{{ solr5_settings.version }}/server/solr/drupal/core.properties
     - watch:
       - supervisord: solr-server-running
