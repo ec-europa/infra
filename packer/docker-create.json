@@ -15,7 +15,7 @@
     "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
     "inline": [
       "apt-get update",
-      "apt-get install curl -y",
+      "apt-get install curl apt-transport-https -y",
       "[ ! -d /etc/salt ] && mkdir /etc/salt",
       "echo 'provider: docker' >> /etc/salt/grains",
       "echo 'service_provider: supervisord' >> /etc/salt/grains",
