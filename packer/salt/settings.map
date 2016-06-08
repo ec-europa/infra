@@ -1,0 +1,12 @@
+
+{% if grains.site_type == "joinup" %}
+{% set infra_settings = {
+	'php' : "7.0",
+	'virtuoso': True
+}%}
+{% elif grains.site_type == "subsite" %}
+{% set infra_settings = {
+        'php' : "7.0",
+        'virtuoso': False
+}%}
+{% endif %}

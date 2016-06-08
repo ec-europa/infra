@@ -1,3 +1,5 @@
+{% from "settings.map" import infra_settings with context %}
+
 mailcatcher-stack:
   pkg.installed:
     - pkgs:
@@ -26,18 +28,35 @@ mailcatcher-daemon:
      - require:
        - cmd: mailcatcher
 
+{% if infra_settings.php == "7.0" %}
+/etc/php/7.0/cli/conf.d/30-mailcatcher.ini:
+  file.managed:
+    - source: salt://mailcatcher/php.ini
+    - require:
+      - pkg: php-stack
+      - pkg: apache2
+
+/etc/php/7.0/apache2/conf.d/30-mailcatcher.ini:
+  file.managed:
+    - source: salt://mailcatcher/php.ini
+    - require:
+      - pkg: php-stack
+      - pkg: apache2
+
+{% else %}
 /etc/php5/cli/conf.d/30-mailcatcher.ini:
   file.managed:
     - source: salt://mailcatcher/php.ini
     - require:
-      - pkg: php5-stack
+      - pkg: php-stack
       - pkg: apache2
 
 /etc/php5/apache2/conf.d/30-mailcatcher.ini:
   file.managed:
     - source: salt://mailcatcher/php.ini
     - require:
-      - pkg: php5-stack
+      - pkg: php-stack
       - pkg: apache2
 
+{% endif %}
 

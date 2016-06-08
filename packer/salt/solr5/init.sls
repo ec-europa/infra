@@ -10,10 +10,9 @@ solr-stack:
 solr-server-downloaded:
   archive.extracted:
     - name: /opt/
-    - source: https://www-eu.apache.org/dist/lucene/solr/{{ solr5_settings.version }}/solr-{{ solr5_settings.version }}.tgz
+    - source: http://www-eu.apache.org/dist/lucene/solr/{{ solr5_settings.version }}/solr-{{ solr5_settings.version }}.tgz
     - source_hash: sha1={{ solr5_settings.sha1 }}
     - archive_format: tar
-    - tar_options: v
     - user: nobody
     - group: nogroup
     - if_missing: /opt/solr-{{ solr5_settings.version }}/
@@ -21,7 +20,7 @@ solr-server-downloaded:
 drupal-solr-config-downloaded:
   archive.extracted:
     - name: /opt/
-    - source: https://ftp.drupal.org/files/projects/search_api_solr-7.x-1.10.tar.gz
+    - source: http://ftp.drupal.org/files/projects/search_api_solr-7.x-1.10.tar.gz
     - source_hash: sha256=08fe84bf82a89673d64f4f3fd499e3adeff6e88d03b7b60c673be107c3f932fb
     - archive_format: tar
     - tar_options: v

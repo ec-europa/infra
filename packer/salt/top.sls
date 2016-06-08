@@ -5,12 +5,16 @@ base:
   '*':
     - common
     - apache2
-    - php5
+    - composer
     - mysql
     - mailcatcher
     - solr5
+  'site_type:subsite':
+    - match: grain
+    - php7-fpm
   'site_type:joinup':
     - match: grain
+    - php7-fpm
     - virtuoso-opensource-7
   'provider:ec2':
     - match: grain
