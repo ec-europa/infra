@@ -11,7 +11,7 @@ base:
     - solr5
   'site_type:subsite':
     - match: grain
-    - php7-fpm
+    - php5
   'site_type:joinup':
     - match: grain
     - php7-fpm
