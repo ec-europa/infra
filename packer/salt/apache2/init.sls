@@ -23,3 +23,6 @@ apache2-service:
       - require_in:
         - {{ grains['service_provider'] }}: apache2-service
 {% endif %}
+
+rewrite:
+    apache_module.enabled
