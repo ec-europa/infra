@@ -94,6 +94,7 @@
             <param name="env" value="${cf.stackName}" />
             <param name="SiteType" value="${infra.type}" />
             <param name="GithubSSHKeys" value="${github.ssh.keys}"/>
+            <tag key="env" value="demo" />
         </aws-cf-runstack>
     </target>
 
