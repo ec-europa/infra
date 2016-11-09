@@ -1,7 +1,7 @@
 #!groovy
 node {
-  stage('Build Docker image') {
-    sh 'composer install'
-    sh './vendor/bin/phing build docker-create-instance'
+  checkout scm
+  stage('Build Docker reference image') {
+    sh 'docker build -t fpfis/php56 docker/fpfis-php56'
   }
 }
