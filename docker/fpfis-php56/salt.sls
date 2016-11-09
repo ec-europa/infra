@@ -26,4 +26,3 @@ php-stack-packages:
       - php
       - php-gd
       - php-json
-      - php-curl
