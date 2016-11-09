@@ -39,7 +39,14 @@
             --var project_root=${project.basedir} ${packer.global.settings} virtualbox.json"
           passthru="true" dir="${self.path}/packer"/>
     </target>
-    
+
+    <target name="docker-publish-fpfis-reference" depends="docker-create-fpfis-ref-php56" 
+            description="Build base images from FPFIS reference cocnfig"/>
+
+    <target name="docker-create-fpfis-ref-php56">
+      <exec passthru="true" command="${docker.path} build -t fpfis/php56 ${self.path}/docker/fpfis-php56"/>
+    </target>
+
     <target name="docker-create-instance" description="Create a base docker image to run applications">
         <!-- Running packer for docker -->
         <exec command="${packer.path} build --var project_root=${project.basedir}
