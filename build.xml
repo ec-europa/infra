@@ -19,7 +19,7 @@
     <property name="github.ssh.keys" value="gboddin" />
 
 
-    <property name="packer.global.settings" value="
+    <property name="packer.global.settings" value="${packer.args}
         --var mysql_password=${drupal.db.password} --var site_type=${infra.type}
         --var app_name=${application.name} --var virtuoso_password=${sparql.password}
         --var doc_root=/srv/project/${documentroot.path}" />

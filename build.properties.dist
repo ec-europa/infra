@@ -12,6 +12,7 @@ sparql.password = unsecure
 packer.path = /usr/bin/env packer
 docker.path = /usr/bin/env docker
 self.path = .
+packer.args = 
 
 # AWS settings
 

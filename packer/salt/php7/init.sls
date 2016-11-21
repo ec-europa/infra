@@ -21,6 +21,7 @@ php-stack:
       - php7.0-mcrypt
       - php7.0-cli
       - php7.0-curl
+      - php7.0-xml
     - require:
       - pkg: apache2
       - pkgrepo: php7-repository
