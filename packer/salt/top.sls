@@ -14,7 +14,7 @@ base:
     - php5
   'site_type:joinup':
     - match: grain
-    - php7-fpm
+    - php7
     - virtuoso-opensource-7
   'provider:ec2':
     - match: grain
