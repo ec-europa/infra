@@ -13,7 +13,12 @@
     "ami_block_device_mappings": [
       {
         "device_name": "/dev/xvda",
-        "volume_size": "30"
+        "volume_size": 30
+      }],
+    "launch_block_device_mappings": [
+      {
+        "device_name": "/dev/xvda",
+        "volume_size": 30
       }],
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
