@@ -10,7 +10,11 @@
   },
   "builders": [{
     "type": "amazon-ebs",
-    "volume_size": 16,
+    "ami_block_device_mappings": [
+      {
+        "device_name": "/dev/xvda",
+        "volume_size": "30"
+      }],
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "{{user `aws_region`}}",

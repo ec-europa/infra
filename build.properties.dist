@@ -1,6 +1,6 @@
 # Infra type you're working with 
 
-infra.type = subsite
+infra.type = joinup
 documentroot.path = platform
 
 # Default passwords 
@@ -17,5 +17,6 @@ packer.args =
 # AWS settings
 
 aws.profile = default
+aws.
 aws.region = eu-west-1
 deploy.serviceRole = arn:aws:iam::918396081007:role/CodeDeploy
