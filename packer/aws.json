@@ -10,6 +10,7 @@
   },
   "builders": [{
     "type": "amazon-ebs",
+    "volume_size": 16,
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "{{user `aws_region`}}",
