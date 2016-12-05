@@ -16,15 +16,15 @@
     <property name="docker.mailcatcher.port" value="8581" />
     <property name="application.name" value="unset" />
     <property name="self.path" value="vendor/ec-europa/infra" />
-    <property name="github.ssh.keys" value="gboddin" />
+    <property name="github.ssh.keys" value="gboddin, rvanhoudt" />
 
 
     <property name="packer.global.settings" value="${packer.args}
         --var mysql_password=${drupal.db.password} --var site_type=${infra.type}
         --var app_name=${application.name} --var virtuoso_password=${sparql.password}
-        --var doc_root=/srv/project/${documentroot.path}" />
-
-
+        --var doc_root=/srv/project/${documentroot.path}
+        --var s3_aws_secret_key=${s3.secret}
+        --var s3_aws_access_key=${s3.access}" />
 
     <target name="build-cloudformation-ami" description="Create skeleton AMI in EC2">
         <!-- Running packer for aws -->
@@ -94,7 +94,22 @@
             <param name="env" value="${cf.stackName}" />
             <param name="SiteType" value="${infra.type}" />
             <param name="GithubSSHKeys" value="${github.ssh.keys}"/>
-            <tag key="env" value="demo" />
+            <tag key="env" value="${cf.stackType}" />
+        </aws-cf-runstack>
+    </target>
+
+    <target name="run-stack-keep">
+        <aws-cf-runstack
+                name="${deploy.applicationName}-${cf.stackName}"
+                updateOnConflict="true"
+                capabilities="CAPABILITY_IAM"
+                templatePath="${self.path}/cloudformation/single-server.template">
+            <param name="KeyName" value="${cf.KeyName}" />
+            <param name="ApplicationName" value="${deploy.applicationName}" />
+            <param name="env" value="${cf.stackName}" />
+            <param name="SiteType" value="${infra.type}" />
+            <param name="GithubSSHKeys" value="${github.ssh.keys}"/>
+            <tag key="env" value="keep" />
         </aws-cf-runstack>
     </target>
 

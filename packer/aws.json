@@ -2,6 +2,8 @@
   "variables": {
     "aws_access_key": "",
     "aws_secret_key": "",
+    "s3_aws_access_key": "",
+    "s3_aws_secret_key": "",
     "aws_region": "",
     "site_type": "",
     "mysql_password": "",
@@ -38,6 +40,8 @@
       "[ ! -d /etc/salt ] && mkdir /etc/salt",
       "echo 'provider: ec2' >> /etc/salt/grains",
       "echo 'site_type: {{user `site_type`}}' >> /etc/salt/grains",
+      "echo 's3_aws_access_key: {{user `s3_aws_access_key`}}' >> /etc/salt/grains",
+      "echo 's3_aws_secret_key: {{user `s3_aws_secret_key`}}' >> /etc/salt/grains",
       "echo 'mysql_password: {{user `mysql_password`}}' >> /etc/salt/grains",
       "echo 'virtuoso_password: {{user `virtuoso_password`}}' >> /etc/salt/grains",
       "echo 'doc_root: {{user `doc_root`}}' >> /etc/salt/grains",
