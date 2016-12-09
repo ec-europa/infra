@@ -40,5 +40,5 @@ Run_s3fsfuse-build.sh:
   mount.mounted:
     - device: joinup2
     - fstype: fuse.s3fs
-    - opts: allow_other
+    - opts: allow_other,umask=0002
     - mkmnt: True
