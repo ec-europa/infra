@@ -9,7 +9,12 @@
     
     <target name="build-docker-image" description="Create docker image from docker/images directory">
         <!-- Running docker build -->
-        <exec command="docker build -t ${docker.build.image} docker/images/${docker.build.image} " passthru="true" dir="${self.path}"/>
+        <exec command="docker build -t ${docker.build.image} docker/images/${docker.build.image}" passthru="true" dir="${self.path}"/>
+    </target>
+
+    <target name="push-docker-image" description="Push docker image to docker hub">
+        <!-- Running docker build -->
+        <exec command="docker push ${docker.build.image}" passthru="true" dir="${self.path}"/>
     </target>
 
 </project>
