@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="Infra" default="help">
+
+    <property file="build.properties.local" />
+    <property file="build.properties" />
+    <property file="build.properties.dist" />
+
+    
+    <target name="build-docker-image" description="Create docker image from docker/images directory">
+        <!-- Running docker build -->
+        <exec command="docker build -t ${docker.build.image} docker/images/${docker.build.image} " passthru="true" dir="${self.path}"/>
+    </target>
+
+</project>
