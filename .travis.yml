@@ -1,0 +1,17 @@
+language: php
+php:
+  - 7.0
+services:
+  - docker
+env:
+  matrix:
+  - STEP="build-docker-image" ARGS="-Ddocker.build.image=fpfis/php56"
+  - STEP="build-docker-image" ARGS="-Ddocker.build.image=fpfis/varnish5"
+  - STEP="build-docker-image" ARGS="-Ddocker.build.image=fpfis/redis"
+  - STEP="build-docker-image" ARGS="-Ddocker.build.image=fpfis/solr5"
+install: composer install
+script:
+  - "./vendor/bin/phing ${TARGET} ${ARGS}"
+notifications:
+  slack:
+    secure: F1DFVdK8k7Gf0KppcV9IRq5muVGBinC40vqju2rMqQ2NgpvLP8WZzZ7VrIDC0aTRqT+vsHWeS0o/nRnvz3Kry6dE8qXXW9TOeE2VGpb6IOtayJzGgUq2qLusfpjfWjizNkWQvLMUmvNANZWoepKXyJiYLcR1dobmkVGC7bR5YZvQ05Z1Msq4FOcFymhHsYFfZJwyHkRjnRQsY54PguptZFgl5DH/3iq6hVjmLGArlIUIaQEBVcSGdFJN9pIehNlBVVwePtyt88LKoS7xFrC/yDJxgeyjylSocxqhrxxEMxOL6SN47WhRZcg0zW4/ct13iO/hCOjF5lCSN84zqKSf5OLZgyIcvKAJ9iQ1800b7MjiCIfO8TP8SBkQ6QjFdecv1oY0HD0sVt2f6anHbR0EYFMzfoQBHmJDvELimBVHTZwZ65L4FOIO88vkRv+lA3zTcfjjnHvjFZOWdDc3EbqYYy5+IJ49ZzkBh58Uzx4juEGb3gqBjGzUXUDyEyWAHnZkXpwtlw7goQ+pnaU7e2bkEF7dxo76e/sTU4OvC7qqtLJAKOAM4MA2E9n0Se7zhzbfs4DHY1FayLF2/OgopI3446mdaE7NA4MWbmql8oub70qTaQFmhzgyA2BZ+Q3gQuIqGoHBBlDJH4/hAbBaQTU2vZWSf/XI6V0Cn1woAH3RxZQ=
