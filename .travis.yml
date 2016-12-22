@@ -5,6 +5,8 @@ services:
 - docker
 env:
   matrix:
+  - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/mysql56"
+  - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/mysql57"
   - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/php56"
   - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/php70"
   - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/php71"
