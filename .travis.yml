@@ -5,10 +5,10 @@ services:
   - docker
 env:
   matrix:
-  - STEP="build-docker-image" ARGS="-Ddocker.build.image=fpfis/php56"
-  - STEP="build-docker-image" ARGS="-Ddocker.build.image=fpfis/varnish5"
-  - STEP="build-docker-image" ARGS="-Ddocker.build.image=fpfis/redis"
-  - STEP="build-docker-image" ARGS="-Ddocker.build.image=fpfis/solr5"
+  - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/php56"
+  - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/varnish5"
+  - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/redis"
+  - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/solr5"
 install: composer install
 script:
   - "./vendor/bin/phing ${TARGET} ${ARGS}"
