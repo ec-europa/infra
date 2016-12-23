@@ -5,16 +5,32 @@
     <property file="build.properties.local" />
     <property file="build.properties" />
     <property file="build.properties.dist" />
-
     
-    <target name="build-docker-image" description="Create docker image from docker/images directory">
+    <property name="docker.compose.env" value="env DOCKER_HTTP_PORT=${docker.compose.http.port} DOCKER_HTTP_ROOT=${docker.compose.http.root}"/>
+    
+    <target name="infra-build-docker-image" description="Create docker image from docker/images directory">
         <!-- Running docker build -->
-        <exec command="docker build -t ${docker.build.image} docker/images/${docker.build.image}" passthru="true" dir="${self.path}"/>
+        <exec command="${docker.bin} build -t ${docker.build.image} docker/images/${docker.build.image}" passthru="true" dir="${self.path}"/>
     </target>
 
-    <target name="push-docker-image" description="Push docker image to docker hub">
+    <target name="infra-push-docker-image" description="Push docker image to docker hub">
         <!-- Running docker build -->
         <exec command="docker push ${docker.build.image}" passthru="true" dir="${self.path}"/>
+    </target>
+
+
+    <target name="infra-docker-start" description="Starts an instance of an infra">
+        <exec command="${docker.compose.env} ${docker.compose.bin} -p ${project.name} up --no-recreate" 
+           dir="${self.path}/docker/compose/${docker.compose.infra}"
+           passthru="true"
+        />
+    </target>
+
+    <target name="infra-docker-stop" description="Stops an instance of an infra">
+        <exec command="${docker.compose.env} ${docker.compose.bin} stop ${project.name} " 
+           dir="${self.path}/docker/compose/${docker.compose.infra}"
+           passthru="true"
+        />
     </target>
 
 </project>
