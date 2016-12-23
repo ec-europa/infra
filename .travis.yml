@@ -11,6 +11,7 @@ env:
   - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/php70"
   - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/php71"
   - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/varnish5"
+  - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/nexteuropa-varnish5"
   - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/redis"
   - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/solr5"
   global:

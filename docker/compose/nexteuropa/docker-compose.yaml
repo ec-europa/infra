@@ -1,0 +1,44 @@
+version: "2"
+
+services:
+
+  mysql:
+    image: fpfis/mysql56:latest
+    ports:
+      - "3306"
+
+  web:
+    image: fpfis/php56:latest 
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "80"
+    links:
+      - mysql
+      - redis
+      - solr
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025"
+
+  redis:
+    image: fpfis/redis:latest 
+    ports:
+      - "6379"
+
+  solr:
+    image: fpfis/solr5:latest 
+    ports:
+      - "8405:8983"
+
+  varnish:
+    image: fpfis/nexteuropa-varnish5:latest 
+    links:
+      - web
+      - mailhog
+      - solr
+    ports:
+      - "8404:6081" # HTTP Proxy
+      - "6082" # Control terminal
