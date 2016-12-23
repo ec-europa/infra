@@ -10,7 +10,7 @@ services:
   web:
     image: fpfis/php56:latest 
     volumes:
-      - ./:/var/www/html
+      - ${DOCKER_HTTP_ROOT}:/var/www/html
     ports:
       - "80"
     links:
@@ -40,5 +40,5 @@ services:
       - mailhog
       - solr
     ports:
-      - "8404:6081" # HTTP Proxy
+      - "${DOCKER_HTTP_PORT}:6081" # HTTP Proxy
       - "6082" # Control terminal
