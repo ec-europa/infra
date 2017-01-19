@@ -23,5 +23,5 @@ script:
 after_success:
   - if [ "$TRAVIS_BRANCH" == "release/1.0" ] && [ "$TARGET" == "infra-build-docker-image" ]; then
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"; 
-      ./vendor/bin/phing push-docker-image ${ARGS}  ; 
+      ./vendor/bin/phing infra-push-docker-image ${ARGS}  ; 
     fi
