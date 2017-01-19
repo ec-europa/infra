@@ -10,6 +10,7 @@
     
     <target name="infra-build-docker-image" description="Create docker image from docker/images directory">
         <!-- Running docker build -->
+        <exec command="${docker.bin} pull ${docker.build.image}" passthru="true" dir="${self.path}"/>
         <exec command="${docker.bin} build -t ${docker.build.image} docker/images/${docker.build.image}" passthru="true" dir="${self.path}"/>
     </target>
 
