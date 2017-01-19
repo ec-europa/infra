@@ -5,15 +5,15 @@ services:
 - docker
 env:
   matrix:
-  - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/mysql56"
-  - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/mysql57"
-  - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/php56"
-  - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/php70"
-  - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/php71"
-  - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/varnish5"
-  - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/nexteuropa-varnish5"
-  - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/redis"
-  - TARGET="build-docker-image" ARGS="-Ddocker.build.image=fpfis/solr5"
+  - TARGET="infra-build-docker-image" ARGS="-Ddocker.build.image=fpfis/mysql56"
+  - TARGET="infra-build-docker-image" ARGS="-Ddocker.build.image=fpfis/mysql57"
+  - TARGET="infra-build-docker-image" ARGS="-Ddocker.build.image=fpfis/php56"
+  - TARGET="infra-build-docker-image" ARGS="-Ddocker.build.image=fpfis/php70"
+  - TARGET="infra-build-docker-image" ARGS="-Ddocker.build.image=fpfis/php71"
+  - TARGET="infra-build-docker-image" ARGS="-Ddocker.build.image=fpfis/varnish5"
+  - TARGET="infra-build-docker-image" ARGS="-Ddocker.build.image=fpfis/nexteuropa-varnish5"
+  - TARGET="infra-build-docker-image" ARGS="-Ddocker.build.image=fpfis/redis"
+  - TARGET="infra-build-docker-image" ARGS="-Ddocker.build.image=fpfis/solr5"
   global:
     - secure: dC0GnBpUHnTGyv+S00hd0iMzN4pAkaPutcDTcKiQ9c9Qekqp33rQZuZ77rhDYTAQRBpcB5sEpRxEC857ioK4irgY8AL+7cyIoDK2x9TyBwi+MY/d0RHXhUJvmN0CZTzLL4Vnhbj3DZHY6V8tZ/4qyDLjQjLdliLzkzv4KEfMPQkIVIEKcCiX793qMyo0oEEceGHVM8lnVTJ7D2asZ0Nl8p2qnlFrdC5VmTfR3P6ycyqG8lwSiMLCDfgcixBXoTxg3tVzcMn791J3jrAqv1j70ybOvjZb5Qyo6CDQH6mDxnxZ1ZHOad6LHujPy6+CN3ZJv9XYSCtFcNEtRN5ZiHnzaEbF30XVmQnAthLOVJDxzPJFP3ewuAqcNDidxdn1KZBsBLSHk1tobGrkp5xGfvsbDjVhk3R3JKRSTpfZDrYnghzKdhr03X8C/RGaYfFJWzrrqo1Z16MnXrkZEEBU3bN6Pdg8J4tzkTUtrMxhPhkXEA95c8qteET8BOdYftbLFI3esaNyvYy+hbOjqEJQQkO0bdJUXarcsVZRd4eObLKezUf8Cvkt4yR2Lbha0WLZ+VI4y//0Hm8STauhkUTP8jnx6YaX3/Z61pnTaxNbXxHaHwD2Vsg+79n5InZuXU6Dx81IqhvA7lU2EQb7Ry9zlOBFwvdzBwptZjIcaPnB84Du7Aw=
     - secure: EGShLFhMb4NNjaX0mG02L8SrKy0gJEpKTMpY9Wz1JhX2Z71AWA/3VBdJDY25RHmn11Bin7X+3rZOS/kn81eUmeHl+bmarCGI/YL2ZRPjd49qcs6MZdc5cuaiH212Ze/v7ij40ew3C5Qfctwd1Mf7NHULm8sQ0CgMVBzzUQ0CmcIyuO5+40JftxsN6uIRhh/25oV+hAxSrmW2qTfUxM/sk/qD+g1JlIJiJTHDfJeysKqKCVh5peljleeosW7BqDjAPGW6yiv1HKf9DTYjikoUWbkKiuxmjQDdWpzV7dUtBPek7t5QZQHLlAEXMez5qSsRANGh2D4F5tK57eicRfgdJQ1n9+sWWU48Bv/FgwHHPxfooAxMhWGSMAvpnOcu3cQb5jttA+fQ3LLG92HY+EQeH3r4w7Gme1260MNPWixy6YFpVr2WUwgKp6SIIGMmPGSZPuhDAtDzjSFHIF+oQtFcP4i0PP9FkPLKrHGGayUdpjbgizCR1/IJqz9kHdlrWHTZ8AAl77EYzwpUI5nV5bwgefKZ5CZ/2+cbylccJKLYjHeVIpm2CI4bgIImz3leImXrbKP5YBV3zGChrIag2yLVEKfU/rKIHTY5HBBVXNV/iwZh9rSbEhC7pb5RSDv03WpXrKuzsMkeyBF42QySqIJPHtTXuPBKwdK7TO39xSt+vG8=
@@ -21,7 +21,7 @@ install: composer install
 script:
   - "./vendor/bin/phing ${TARGET} ${ARGS}"
 after_success:
-  - if [ "$TRAVIS_BRANCH" == "release/1.0" ] && [ "$TARGET" == "build-docker-image" ]; then
+  - if [ "$TRAVIS_BRANCH" == "release/1.0" ] && [ "$TARGET" == "infra-build-docker-image" ]; then
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"; 
       ./vendor/bin/phing push-docker-image ${ARGS}  ; 
     fi
