@@ -7,7 +7,7 @@ import header;
 import vsthrottle;
 
 backend default {
-  .host = "web";
+  .host = "127.0.0.1";
   .port = "80";
 }
 
