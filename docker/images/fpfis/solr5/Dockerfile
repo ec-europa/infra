@@ -1,7 +1,7 @@
 FROM centos:6
 MAINTAINER Gregory Boddin
 
-RUN rpm -Uvh https://repo.ne-dev.eu/el/6/fpfis-repo-6-1.el6.src.rpm
+RUN curl http://repo.ne-dev.eu/el/6/fpfis.repo > /etc/yum.repos.d/fpfis.repo
 RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 RUN yum update -y && yum install -y java-1.8.0-openjdk wget && wget "http://apache.crihan.fr/dist/lucene/solr/5.5.3/solr-5.5.3.tgz" -O /opt/solr.tgz && cd /opt && tar -xzvf solr.tgz && rm solr.tgz && mv /opt/solr-5.5.3 /opt/solr && yum clean all
 ADD cores/d7_search_api /opt/solr/server/solr/d7_search_api/conf

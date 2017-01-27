@@ -5,7 +5,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
 ENV COMPOSER_VERSION 1.3.1
 
-RUN rpm -Uvh https://repo.ne-dev.eu/el/6/fpfis-repo-6-1.el6.src.rpm
+RUN curl http://repo.ne-dev.eu/el/6/fpfis.repo > /etc/yum.repos.d/fpfis.repo
 RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 RUN yum update -y && yum install -y mysql rsync patch zip unzip git httpd php56e mod_php56e php56e-gd php56e-cli php56e-imap php56e-intl php56e-ldap php56e-mbstring php56e-mcrypt php56e-mssql php56e-mysqlnd  php56e-opcache php56e-pdo php56e-soap php56e-xml php56e-pgsql php56e-pecl-redis && yum clean all
 RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/composer/getcomposer.org/2091762d2ebef14c02301f3039c41d08468fb49e/web/installer \
