@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <project name="Infra" default="help">
-
+    <import file="./vendor/continuousphp/aws-sdk-phing/tasks.xml" />
+    <import file="./tasks.xml" />
     <property file="build.properties.local" />
     <property file="build.properties" />
     <property file="build.properties.dist" />
@@ -25,6 +26,14 @@
         --var doc_root=/srv/project/${documentroot.path}
         --var s3_aws_secret_key=${s3.secret}
         --var s3_aws_access_key=${s3.access}" />
+
+    <target name="delete-stack-only" depends="setup-aws">
+        <aws-cf-deletestack name="${deploy.applicationName}-${cf.stackName}" />
+    </target>
+
+    <target name="wait-for-deletion" depends="setup-aws">
+        <aws-cf-waitfordeletion name="${deploy.applicationName}-${cf.stackName}" timeOut="300" />
+    </target>
 
     <target name="build-cloudformation-ami" description="Create skeleton AMI in EC2">
         <!-- Running packer for aws -->

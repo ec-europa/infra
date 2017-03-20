@@ -12,6 +12,12 @@
     "require": {
         "phing/phing": "2.*",
         "pear/archive_tar": "^1.4",
-        "pear/versioncontrol_git": "dev-master"
+        "pear/versioncontrol_git": "dev-master",
+        "continuousphp/aws-sdk-phing": "~0.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aws\\": "src/Aws"
+        }
     }
 }
