@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<project name="Infra" default="help">
-    <import file="./vendor/continuousphp/aws-sdk-phing/tasks.xml" />
+<project name="Infra" default="help" basedir=".">
     <import file="./tasks.xml" />
     <property file="build.properties.local" />
     <property file="build.properties" />
