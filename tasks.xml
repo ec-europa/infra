@@ -1,0 +1,3 @@
+<project>
+    <taskdef name="aws-cf-waitfordeletion" classname="Aws\Task\CloudFormation\WaitForDeletionTask" />
+</project>
