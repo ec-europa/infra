@@ -1,16 +1,16 @@
 # Solr5 basic usage instructions
 
-__ download the container __
+*download the container*
 ```sh
 docker pull fpfis/solr5
 ```
 
-__ run the container __
+*run the container*
 ```sh
 docker run --name solr5.local --rm -p 8983:8983 -it fpfis/solr5
 ```
 
-__ test the connection __
+*test the connection*
 ```sh
 curl -v http://localhost:8983/solr/
 *   Trying 127.0.0.1...
