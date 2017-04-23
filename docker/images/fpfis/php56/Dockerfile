@@ -23,5 +23,6 @@ RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/compos
 ADD envvars /etc/httpd/envvars
 ADD php.ini /etc/php.d/fpfis.ini
 ADD run.sh /run.sh
+ADD httpd.conf /etc/httpd/conf/httpd.conf
 CMD /run.sh
 #CMD bash -c "source /etc/httpd/envvars && exec /usr/sbin/httpd -d /usr/lib64/httpd -f /etc/httpd/conf/httpd.conf -DFOREGROUND"
