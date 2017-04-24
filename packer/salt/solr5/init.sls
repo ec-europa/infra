@@ -1,4 +1,4 @@
-{% from "solr5/map.jinja" import solr5_settings with context %}
+    {% from "solr5/map.jinja" import solr5_settings with context %}
 
 solr-stack:
   pkg.installed:
