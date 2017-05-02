@@ -17,6 +17,8 @@ base:
     - php7
     - virtuoso-opensource-7
     - S3Bucket
+    - efs
+    - redis
   'provider:ec2':
     - match: grain
     - aws
