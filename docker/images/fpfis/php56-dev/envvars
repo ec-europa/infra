@@ -1,0 +1,18 @@
+# envvars - default environment variables for apache2ctl
+
+# this won't be correct after changing uid
+unset HOME
+
+export APACHE_RUN_USER=www-data
+export APACHE_RUN_GROUP=www-data
+export APACHE_PID_FILE=/var/run/httpd.pid
+export APACHE_RUN_DIR=/var/run/httpd
+export APACHE_LOCK_DIR=/var/lock/httpd
+export APACHE_LOG_DIR=/var/log/httpd
+
+export LANG=C
+
+export LANG
+
+#export APACHE_ARGUMENTS=''
+
