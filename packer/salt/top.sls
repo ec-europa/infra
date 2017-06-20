@@ -19,6 +19,7 @@ base:
     - S3Bucket
     - efs
     - redis
+    - solr5.joinup
   'provider:ec2':
     - match: grain
     - aws
