@@ -1,3 +1,5 @@
+    {% from "solr5/map.jinja" import solr5_settings with context %}
+
 /opt/solr-{{ solr5_settings.version }}/server/solr/drupal_published/conf:
   file.directory:
     - user: nobody
