@@ -64,7 +64,7 @@
   "Mappings": {
     "Ami2SiteType": {
       "eu-west-1": {
-        "joinup": "ami-f8746c9e",
+        "joinup": "ami-7e1a0118",
         "subsite": "ami-d71285a4"
       }
     }
