@@ -23,7 +23,6 @@ drupal-solr-config-downloaded:
     - source: http://ftp.drupal.org/files/projects/search_api_solr-7.x-1.10.tar.gz
     - source_hash: sha256=08fe84bf82a89673d64f4f3fd499e3adeff6e88d03b7b60c673be107c3f932fb
     - archive_format: tar
-    - tar_options: v
     - user: nobody
     - group: nogroup
     - if_missing: /opt/search_api_solr
