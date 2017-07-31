@@ -20,12 +20,12 @@ solr-server-downloaded:
 drupal-solr-config-downloaded:
   archive.extracted:
     - name: /opt/
-    - source: http://ftp.drupal.org/files/projects/search_api_solr-7.x-1.10.tar.gz
-    - source_hash: sha256=08fe84bf82a89673d64f4f3fd499e3adeff6e88d03b7b60c673be107c3f932fb
+    - source: http://ftp.drupal.org/files/projects/search_api_solr-7.x-1.12.tar.gz
+    - source_hash: sha256=8bcdae6f94ebc5af0454868c2958158270a900551deb52212aac189beeb423db
     - archive_format: tar
     - user: nobody
     - group: nogroup
-    - if_missing: /opt/search_api_solr
+    - if_missing: /opt/search_api_solr/
     - require:
       - archive: solr-server-downloaded
 
