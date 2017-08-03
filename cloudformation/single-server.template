@@ -59,6 +59,10 @@
     "GithubSSHKeys": {
       "Type": "String",
       "Description": "Comma separated list of Github user names for SSH public keys"
+    },
+    "PiwikAuthenticationToken": {
+      "Type": "String",
+      "Description": "The authentication token of the Piwik server"
     }
   },
   "Mappings": {
@@ -288,6 +292,12 @@
                 "echo 'deploy.groupName=",
                 {
                   "Ref": "env"
+                },
+                "' >> /usr/local/etc/subsite/subsite.tmp.ini",
+                "\n",
+                "echo 'piwik.token=",
+                {
+                  "Ref": "PiwikAuthenticationToken"
                 },
                 "' >> /usr/local/etc/subsite/subsite.tmp.ini",
                 "\n",
