@@ -29,14 +29,14 @@ mailcatcher-daemon:
        - cmd: mailcatcher
 
 {% if infra_settings.php == "7.0" %}
-/etc/php/7.0/cli/conf.d/30-mailcatcher.ini:
+/etc/php/7.1/cli/conf.d/30-mailcatcher.ini:
   file.managed:
     - source: salt://mailcatcher/php.ini
     - require:
       - pkg: php-stack
       - pkg: apache2
 
-/etc/php/7.0/apache2/conf.d/30-mailcatcher.ini:
+/etc/php/7.1/apache2/conf.d/30-mailcatcher.ini:
   file.managed:
     - source: salt://mailcatcher/php.ini
     - require:
