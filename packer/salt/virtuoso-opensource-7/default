@@ -12,4 +12,4 @@ DAEMON_OPTS="+wait +configfile /etc/virtuoso-opensource-7/virtuoso.ini"
 # Read README.Debian for information on how to do so.
 
 # Set to 'yes' to start virtuoso, set to 'no' otherwise
-RUN=yes
+RUN=no
