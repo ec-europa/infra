@@ -103,6 +103,7 @@
             <param name="env" value="${cf.stackName}" />
             <param name="SiteType" value="${infra.type}" />
             <param name="GithubSSHKeys" value="${github.ssh.keys}"/>
+            <param name="AdditionalPhingProperties" value="${cloudformation.properties}"/>
             <tag key="env" value="${cf.stackType}" />
         </aws-cf-runstack>
     </target>
@@ -118,6 +119,7 @@
             <param name="env" value="${cf.stackName}" />
             <param name="SiteType" value="${infra.type}" />
             <param name="GithubSSHKeys" value="${github.ssh.keys}"/>
+            <param name="AdditionalPhingProperties" value="${cloudformation.properties}"/>
             <tag key="env" value="keep" />
         </aws-cf-runstack>
     </target>

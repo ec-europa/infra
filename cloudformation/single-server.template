@@ -59,6 +59,10 @@
     "GithubSSHKeys": {
       "Type": "String",
       "Description": "Comma separated list of Github user names for SSH public keys"
+    },
+    "AdditionalPhingProperties": {
+      "Type": "String",
+      "Description": "Additional phing properties to inject in the environment."
     }
   },
   "Mappings": {
@@ -282,6 +286,11 @@
                 "echo 'deploy.applicationName=",
                 {
                   "Ref": "ApplicationName"
+                },
+                "' >> /usr/local/etc/subsite/subsite.tmp.ini",
+                "echo '",
+                {
+                  "Ref": "AdditionalPhingProperties"
                 },
                 "' >> /usr/local/etc/subsite/subsite.tmp.ini",
                 "\n",
