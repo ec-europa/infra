@@ -50,7 +50,7 @@
     "HostedZone": {
       "Type":"String",
       "Description":"The DNS name of an existing Amazon Route 53 hosted zone",
-      "Default":"ec-europa.continuous.lu"
+      "Default":"joinup.fpfis.tech.ec.europa.eu"
     },
     "ApplicationName": {
       "Type": "String",
