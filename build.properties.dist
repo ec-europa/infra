@@ -18,5 +18,5 @@ cf.stackType=demo
 # AWS settings
 
 aws.profile = default
-aws.region = eu-west-1
+aws.region = eu-central-1
 deploy.serviceRole = arn:aws:iam::918396081007:role/CodeDeploy
